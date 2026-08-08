@@ -11,10 +11,11 @@
 
 
 // Dados de saldo (Carlos)
-// id, saldo_total, entradas, saidas, despesas, receita, id_usuario
-
-
-
+// id_usuario, id, saldo_total, entradas, saidas, despesas, receita
+const saldos = {
+    1: {id: 1, saldo_total: 1000, entradas: [["Pix Antonio", 100], ["Pix Josefina", 54]], saidas: [["Pagamento DAS", 82]], despesas: 0, receita: 0},
+    2: {id: 2, saldo_total: 500, entradas: [], saidas: [], despesas: 0, receita: 0}
+}
 
 
 // Dados de Professor (Ewerton)
