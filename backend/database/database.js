@@ -44,7 +44,13 @@ const saldos = {
 // Dados de Professor (Ewerton)
 // id, nome, cpf
 
-
+const professores = [
+    { id: 1, nome: "Ana Carolina", cpf: "123.456.789-00"}
+    { id: 2, nome: "Carlos Eduardo", cpf: "987.654.321-00"}
+    { id: 3, nome: "Fernanda Souza", cpf: "456.789.123-00"}
+    { id: 4, nome: "Marcos Oliveira", cpf: "321.654.987-00"}
+    { id: 5, nome: "Juliana Ferreira", cpf: "741.852.963-00"}
+];
 
 
 
