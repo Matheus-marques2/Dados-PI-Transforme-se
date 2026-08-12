@@ -43,7 +43,41 @@ const saldos = {
 
 // Dados de Cursos (Matheus)
 // id, nome, cargahoraria, avaliação, modulo, genero, id_professor, id_usuario
-
+const cursos = {
+// id_usuarios é uma lista com todos os usuários que compraram aquele curso
+    1: {
+        id_curso: 1,
+        nome: "Introdução a Conceitos de Finanças",
+        carga_horaria: 60,
+        avaliacao: 4.5,
+        modulos: [
+        "Introdução à Finanças",
+        "Educação Financeira",
+        "Investimentos",
+        "Mercado Financeiro",
+        "Análise de Risco"
+        ],
+        genero: "Finanças",
+        id_professor: 1,
+        id_usuarios: [1]
+    },
+    
+    2: {
+        id_curso: 2,
+        nome: "Empreendedorismo para Pequenos Négocios",
+        carga_horaria: 80,
+        avaliacao: 4.8,
+        modulos: [
+        "Introdução ao Empreendedorismo",
+        "Plano de Negócios",
+        "Marketing para Empreendedores",
+        "Gestão de Pequenos Negócios",
+        ],
+        genero: "Empreendedorismo",
+        id_professor: 2,
+        id_usuarios: [1]
+    }
+}
 
 
 
