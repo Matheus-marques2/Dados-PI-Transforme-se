@@ -91,8 +91,46 @@ const cursos = {
 
 // Dados de To Do List (Marcio)
 // id_usuario, titulo, descricao
-
-
+// Dicionário grande de tarefas (To Do List)
+const tarefas = {
+  tarefa_1: {
+    id: 1,
+    id_usuario: 1,
+    titulo: "Atividade física",
+    descricao: "Realizar treino de mobilidade e exercícios na academia"
+  },
+  tarefa_2: {
+    id: 2,
+    id_usuario: 2,
+    titulo: "Organizar Estoque",
+    descricao: ""
+  },
+  tarefa_3: {
+    id: 3,
+    id_usuario: 3,
+    titulo: "Praticar desenho",
+    descricao: "Fazer estudos de anatomia humana, luz e sombra no papel"
+  },
+  tarefa_4: {
+    id: 4,
+    id_usuario: 4,
+    titulo: "Organizar espaço de trabalho",
+    descricao: "Limpar a mesa e organizar os materiais de estudo"
+  },
+  tarefa_5: {
+    id: 5,
+    id_usuario: 5,
+    titulo: "Revisar código",
+    descricao: "Verificar a estrutura do dicionário principal e testar no console"
+  }
+};
+ tarefa_6: {
+    id: 6,
+    id_usuario: 5,
+    titulo: "Revisar código",
+    descricao: "Verificar a estrutura do dicionário principal e testar no console"
+  }
+};
 
 
 
