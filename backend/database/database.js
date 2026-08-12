@@ -6,6 +6,13 @@
 // Dados de usuarios (Sabrina)
 // id, email, senha, nome
 
+const usuarios = [
+    { id: "1" ,email: "sabrina@gmail.com", nome: "Sabrina Barros", senha: "123456" },
+    { id: "2", email: "carlos@gmail.com", nome: "Carlos Henrique", senha: "123456" },
+    { id: "3", email: "marcio@gmail.com", nome: "Marcio Eduardo", senha: "123456" },
+    { id: "4", email: "ewerton@gmail.com", nome: "Ewerton Henrique", senha: "123456" },
+    { id: "5", email: "matheus@gmail.com", nome: "Matheus Marques", senha: "123456" }
+];
 
 
 
