@@ -45,10 +45,10 @@ const saldos = {
 // id, nome, cpf
 
 const professores = [
-    { id: 1, nome: "Ana Carolina", cpf: "123.456.789-00"}
-    { id: 2, nome: "Carlos Eduardo", cpf: "987.654.321-00"}
-    { id: 3, nome: "Fernanda Souza", cpf: "456.789.123-00"}
-    { id: 4, nome: "Marcos Oliveira", cpf: "321.654.987-00"}
+    { id: 1, nome: "Ana Carolina", cpf: "123.456.789-00"},
+    { id: 2, nome: "Carlos Eduardo", cpf: "987.654.321-00"},
+    { id: 3, nome: "Fernanda Souza", cpf: "456.789.123-00"},
+    { id: 4, nome: "Marcos Oliveira", cpf: "321.654.987-00"},
     { id: 5, nome: "Juliana Ferreira", cpf: "741.852.963-00"}
 ];
 
@@ -105,38 +105,42 @@ const tarefas = {
     titulo: "Atividade física",
     descricao: "Realizar treino de mobilidade e exercícios na academia"
   },
+
   tarefa_2: {
     id: 2,
     id_usuario: 2,
     titulo: "Organizar Estoque",
     descricao: ""
   },
+
   tarefa_3: {
     id: 3,
     id_usuario: 3,
     titulo: "Praticar desenho",
     descricao: "Fazer estudos de anatomia humana, luz e sombra no papel"
   },
+
   tarefa_4: {
     id: 4,
     id_usuario: 4,
     titulo: "Organizar espaço de trabalho",
     descricao: "Limpar a mesa e organizar os materiais de estudo"
   },
+
   tarefa_5: {
     id: 5,
     id_usuario: 5,
     titulo: "Revisar código",
     descricao: "Verificar a estrutura do dicionário principal e testar no console"
-  }
-};
+  },
+  
  tarefa_6: {
     id: 6,
     id_usuario: 5,
     titulo: "Revisar código",
     descricao: "Verificar a estrutura do dicionário principal e testar no console"
   }
-};
+}
 
 
 
