@@ -1,12 +1,7 @@
-
-
-
-
-
 // Dados de usuarios (Sabrina)
 // id, email, senha, nome
 
-const usuarios = {
+export const usuarios = {
   "sabrina@gmail.com": { id_usuario: "1", nome: "Sabrina Barros", senha: "123456" },
   "carlos@gmail.com": { id_usuario: "2", nome: "Carlos Henrique", senha: "123456" },
   "marcio@gmail.com": { id_usuario: "3", nome: "Marcio Eduardo", senha: "123456" },
@@ -16,7 +11,7 @@ const usuarios = {
 
 // Dados de saldo (Carlos)
 // id_usuario, id, saldo_total, entradas, saidas, despesas, receita
-const saldos = {
+export const saldos = {
   // a chave principal de busca é o id_usuario
   1: {
     id_saldo: 1,
@@ -26,7 +21,7 @@ const saldos = {
     despesas: 0,
     receita: 0
   },
-  
+
   2: {
     id_saldo: 2,
     saldo_total: 500,
@@ -40,7 +35,7 @@ const saldos = {
 // Dados de Professor (Ewerton)
 // id, nome, cpf
 
-const professores = {
+export const professores = {
   1:{ id_professor: 1, nome: "Ana Carolina", cpf: "123.456.789-00"},
   2:{ id_professor: 2, nome: "Carlos Eduardo", cpf: "987.654.321-00"},
   3:{ id_professor: 3, nome: "Fernanda Souza", cpf: "456.789.123-00"},
@@ -50,7 +45,7 @@ const professores = {
 
 // Dados de Cursos (Matheus)
 // id, nome, cargahoraria, avaliação, modulo, genero, id_professor, id_usuario
-const cursos = {
+export const cursos = {
 // id_usuarios é uma lista com todos os usuários que compraram aquele curso
   1: {
     id_curso: 1,
@@ -89,7 +84,7 @@ const cursos = {
 // Dados de To Do List (Marcio)
 // id_usuario, titulo, descricao
 // Dicionário grande de tarefas (To Do List)
-const tarefas = {
+export const tarefas = {
   1: {
     id: 1,
     id_usuario: 1,
@@ -132,6 +127,4 @@ const tarefas = {
     descricao: "Verificar a estrutura do dicionário principal e testar no console"
   }
 }
-
-
 
