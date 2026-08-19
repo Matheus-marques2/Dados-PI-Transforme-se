@@ -7,11 +7,11 @@
 // id, email, senha, nome
 
 const usuarios = {
-  1:{ id_usuario: "1" ,email: "sabrina@gmail.com", nome: "Sabrina Barros", senha: "123456" },
-  2:{ id_usuario: "2", email: "carlos@gmail.com", nome: "Carlos Henrique", senha: "123456" },
-  3:{ id_usuario: "3", email: "marcio@gmail.com", nome: "Marcio Eduardo", senha: "123456" },
-  4:{ id_usuario: "4", email: "ewerton@gmail.com", nome: "Ewerton Henrique", senha: "123456" },
-  5:{ id_usuario: "5", email: "matheus@gmail.com", nome: "Matheus Marques", senha: "123456" }
+  "sabrina@gmail.com": { id_usuario: "1", nome: "Sabrina Barros", senha: "123456" },
+  "carlos@gmail.com": { id_usuario: "2", nome: "Carlos Henrique", senha: "123456" },
+  "marcio@gmail.com": { id_usuario: "3", nome: "Marcio Eduardo", senha: "123456" },
+  "ewerton@gmail.com": { id_usuario: "4", nome: "Ewerton Henrique", senha: "123456" },
+  "matheus@gmail.com": { id_usuario: "5", nome: "Matheus Marques", senha: "123456" }
 }
 
 // Dados de saldo (Carlos)
