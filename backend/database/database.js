@@ -44,12 +44,12 @@ export const professores = {
 }
 
 // Dados de Cursos (Matheus)
-// id, nome, cargahoraria, avaliação, modulo, genero, id_professor, id_usuario
+// id, nome, cargahoraria, avaliação, modulo, genero, id_professor, id_usuario, preço e descrição
 export const cursos = {
 // id_usuarios é uma lista com todos os usuários que compraram aquele curso
   1: {
     id_curso: 1,
-    nome: "Introdução a Conceitos de Finanças",
+    nome: "Como controlar suas finanças",
     carga_horaria: 60,
     avaliacao: 4.5,
     modulos: [
@@ -61,23 +61,27 @@ export const cursos = {
     ],
     genero: "Finanças",
     id_professor: 1,
-    id_usuarios: [1]
+    id_usuarios: [1],
+    descricao: "Aprenda a ter controle total do seu dinheiro.",
+    preco: "grátis"
   },
   
   2: {
     id_curso: 2,
-    nome: "Empreendedorismo para Pequenos Négocios",
-    carga_horaria: 80,
+    nome: "Montando a sua estratégia",
+    carga_horaria: 30,
     avaliacao: 4.8,
     modulos: [
-    "Introdução ao Empreendedorismo",
-    "Plano de Negócios",
-    "Marketing para Empreendedores",
-    "Gestão de Pequenos Negócios",
+    "Fundamentos do Marketing",
+    "Público-Alvo e Persona",
+    "Estratégia de Marketing Digital",
+    "Publicidade e Mídia Paga",
     ],
-    genero: "Empreendedorismo",
+    genero: "Marketing",
     id_professor: 2,
-    id_usuarios: [1]
+    id_usuarios: [1],
+    descricao: "Aprenda a montar sua estratégia de marketing.",
+    preco: "R$ 9,99"
   }
 }
 
