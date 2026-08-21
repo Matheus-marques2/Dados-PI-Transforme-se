@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +7,10 @@
 </head>
 <body>
     <!-- Formulário para cadastrar um novo usuário -->
-     <h1>Cadastrar usuário</h1>
+    <h1>Cadastrar usuário</h1>
 
-    <!-- Nome, sobrenome, email, senha e id com auto icremento -->
-     <form id="formCadastro">
-
+    <!-- Nome, sobrenome, email, senha e id com auto incremento -->
+    <form id="formCadastro">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" required>
 
@@ -28,15 +27,22 @@
         <br><br>
 
         <label for="senha">Senha:</label>
-        <input type="password" id="senha" required>
+        <input type="password" id="senha" required minlength="6">
 
         <br><br>
 
         <button type="submit">Cadastrar</button>
-
     </form>
 
-    <script src="backend/logic/login/cadastro.js"></script>
+    <!-- Mensagens de sucesso ou erro aparecem aqui no lugar do alert -->
+    <div id="mensagemCadastro" style="display: none; max-width: 420px;"></div>
 
+    <p>
+        Já possui cadastro?
+        <a href="login.html">Entrar</a>
+    </p>
+
+    <!-- type="module" é necessário para usar import/from no JavaScript -->
+    <script type="module" src="backend/logic/login/cadastro.js"></script>
 </body>
 </html>
