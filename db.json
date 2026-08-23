@@ -1,0 +1,20 @@
+{
+    "usuarios": {
+        "sabrina@gmail.com": { "id_usuario": 1, "nome": "Sabrina Barros", "senha": "123456" },
+        "carlos@gmail.com": { "id_usuario": 2, "nome": "Carlos Henrique", "senha": "123456" },
+        "marcio@gmail.com": { "id_usuario": 3, "nome": "Marcio Eduardo", "senha": "123456" },
+        "ewerton@gmail.com": { "id_usuario": 4, "nome": "Ewerton Henrique", "senha": "123456" },
+        "matheus@gmail.com": { "id_usuario": 5, "nome": "Matheus Marques", "senha": "123456" }
+    },
+
+    "saldos": {
+        "1": {
+            "id_saldo": 1,
+            "saldo_total": 1000,
+            "entradas": [["Pix Antonio", 100], ["Pix Josefina", 54]],
+            "saidas": [["Pagamento DAS", 82]],
+            "despesas": 0,
+            "receita": 0
+        }
+    }
+}

@@ -1,37 +1,3 @@
-// Dados de usuarios (Sabrina)
-// id, email, senha, nome
-
-export const usuarios = {
-  "sabrina@gmail.com": { id_usuario: "1", nome: "Sabrina Barros", senha: "123456" },
-  "carlos@gmail.com": { id_usuario: "2", nome: "Carlos Henrique", senha: "123456" },
-  "marcio@gmail.com": { id_usuario: "3", nome: "Marcio Eduardo", senha: "123456" },
-  "ewerton@gmail.com": { id_usuario: "4", nome: "Ewerton Henrique", senha: "123456" },
-  "matheus@gmail.com": { id_usuario: "5", nome: "Matheus Marques", senha: "123456" }
-}
-
-// Dados de saldo (Carlos)
-// id_usuario, id, saldo_total, entradas, saidas, despesas, receita
-export const saldos = {
-  // a chave principal de busca é o id_usuario
-  1: {
-    id_saldo: 1,
-    saldo_total: 1000,
-    entradas: [["Pix Antonio", 100], ["Pix Josefina", 54]],
-    saidas: [["Pagamento DAS", 82]],
-    despesas: 0,
-    receita: 0
-  },
-
-  2: {
-    id_saldo: 2,
-    saldo_total: 500,
-    entradas: [],
-    saidas: [],
-    despesas: 0,
-    receita: 0
-  }
-}
-
 // Dados de Professor (Ewerton)
 // id, nome, cpf
 
