@@ -23,6 +23,14 @@ app.get("/", function(request, response){
     response.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+app.get("/cadastro", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "pages", "cadastro.html"));
+});
+
+app.get("/login", function(resquest, response){
+    response,sendFile(path.join(__dirname, "public", "pages", "login.html"));
+});
+
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal
 // use CTRL + Click no link gerado ou abra o localhost:3000 no seu navegador
