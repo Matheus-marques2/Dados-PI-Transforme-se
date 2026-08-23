@@ -1,14 +1,22 @@
 // Importando a lib Express para este arquivo e armazenando os seus recursos na constante app
 const express = require("express");
 const app = express();
+const fs = require("fs");
 
 // Usando a lib path para conseguir utilizar os arquivos locais do sistema como banco de dados em Json e as paginas web criadas
 const path = require("path");
+
+// Exportando o banco de dados Json
+const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
+
 
 // Da acesso a pasta public ao express para receber recursos de estilizacao e script como css e js
 app.use(express.static(
     path.join(__dirname, "public")
 ));
+
+// Interpletar dados dos formulários
+app.use(express.urlencoded( {extended: true} ));
 
 // Coloca o arquivo index como rota principal do sistema
 app.get("/", function(request, response){
