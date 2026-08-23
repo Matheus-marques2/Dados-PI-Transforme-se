@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
-
     <!-- Verificar se o email existe e se existir verificar a senha -->
-    <form action="backend/logic/login/login.js" method="post">
-        <label for="">email:</label>
-        <input type="email" name="" id="email">
+    <form action="/login" method="POST">
 
-        <label for="">password:</label>
-        <input type="password" name="" id="senha">
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" required>
 
-        <button type="submit" onclick="">Entrar</button>
+        <label for="senha">Password:</label>
+        <input type="password" name="senhaDigitada" required>
+
+        <button type="submit">Entrar</button>
     </form>
 </body>
 </html>
