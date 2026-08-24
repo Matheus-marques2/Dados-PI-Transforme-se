@@ -18,10 +18,27 @@ app.use(express.static(
 // Interpletar dados dos formulários
 app.use(express.urlencoded( {extended: true} ));
 
+
+// ================== Rotas GET para renderizar páginas =======================
+
+
 // Coloca o arquivo index como rota principal do sistema
 app.get("/", function(request, response){
     response.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+app.get("/login", function(resquest, response){
+    response.sendFile(path.join(__dirname, "public", "pages", "login.html"));
+});
+
+app.get("/cadastro", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "pages", "cadastro.html"));
+});
+
+
+// ================== Rotas para POST =======================
+
+
 
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal
