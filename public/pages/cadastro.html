@@ -10,39 +10,21 @@
     <h1>Cadastrar usuário</h1>
 
     <!-- Nome, sobrenome, email, senha e id com auto incremento -->
-    <form id="formCadastro">
+    <form action="/cadastro" id="formCadastro">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" required>
-
-        <br><br>
+        <input type="text" name="nome" id="nome" required>
 
         <label for="sobrenome">Sobrenome:</label>
-        <input type="text" id="sobrenome" required>
-
-        <br><br>
+        <input type="text" name="sobrenome" id="sobrenome" required>
 
         <label for="email">E-mail:</label>
-        <input type="email" id="email" required>
-
-        <br><br>
+        <input type="email" name="email" id="email" required>
 
         <label for="senha">Senha:</label>
-        <input type="password" id="senha" required minlength="6">
-
-        <br><br>
+        <input type="password" name="senha" id="senha" required>
 
         <button type="submit">Cadastrar</button>
     </form>
 
-    <!-- Mensagens de sucesso ou erro aparecem aqui no lugar do alert -->
-    <div id="mensagemCadastro" style="display: none; max-width: 420px;"></div>
-
-    <p>
-        Já possui cadastro?
-        <a href="login.html">Entrar</a>
-    </p>
-
-    <!-- type="module" é necessário para usar import/from no JavaScript -->
-    <script type="module" src="backend/logic/login/cadastro.js"></script>
 </body>
 </html>
