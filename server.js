@@ -27,7 +27,7 @@ app.get("/", function(request, response){
     response.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.get("/login", function(resquest, response){
+app.get("/login", function(request, response){
     response.sendFile(path.join(__dirname, "public", "pages", "login.html"));
 });
 
