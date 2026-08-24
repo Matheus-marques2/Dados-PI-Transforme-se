@@ -18,6 +18,7 @@ app.use(express.static(
 // Interpletar dados dos formulários
 app.use(express.urlencoded( {extended: true} ));
 
+app.use(express.json());
 
 // ================== Rotas GET para renderizar páginas =======================
 
@@ -38,7 +39,15 @@ app.get("/cadastro", function(request, response){
 
 // ================== Rotas para POST =======================
 
-
+app.post("/cadastro", function(request, response){
+    const {email, senha, nome, sobrenome} = request.body;
+    console.log(email);
+    response.send(`
+        <script>
+            alert("Cadastro realizado com sucesso!");
+        </script>
+    `);
+});
 
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal
