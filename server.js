@@ -36,17 +36,27 @@ app.get("/cadastro", function(request, response){
     response.sendFile(path.join(__dirname, "public", "pages", "cadastro.html"));
 });
 
-
 // ================== Rotas para POST =======================
 
 app.post("/cadastro", function(request, response){
-    const {email, senha, nome, sobrenome} = request.body;
-    console.log(email);
-    response.send(`
-        <script>
-            alert("Cadastro realizado com sucesso!");
-        </script>
-    `);
+    const {nome, sobrenome, email, senha} = request.body;
+    
+    if(db.usuarios[email]){
+        response.send("Invalido");
+        return;
+    }
+
+    db.usuarios[email] = {
+        id_usuario: 2,
+        nome: nome,
+        sobrenome: sobrenome,
+        senha: senha
+    }
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
 });
 
 // Sobe o servidor na porta 3000
