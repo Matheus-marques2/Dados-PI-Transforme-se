@@ -31,6 +31,34 @@ app.get("/", function(request, response){
 
 app.get("/login", function(request, response){
     response.sendFile(path.join(__dirname, "public", "pages", "login.html"));
+
+});
+
+app.post("/login", function(request, response) {
+
+    const { emailDigitado, senhaDigitada } = request.body;
+
+    // tem que localizar o usuario pelo o email 
+    const usuario = db.usuarios[emailDigitado];
+
+    console.log(usuario);
+
+    // vai verifica se a pessoa existe
+    if (!usuario) {
+        response.send("Email inválidos");
+        return;
+    }
+
+    console.log(senhaDigitada);
+
+    // aqui verfifica a senha do usuario
+    if (usuario.senha !== senhaDigitada) {
+        response.send("Senha incorreta");
+        return;
+    }
+
+    // Login correto
+    response.send("Login realizado com sucesso!");
 });
 
 app.get("/cadastro", function(request, response){
