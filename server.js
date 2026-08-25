@@ -5,6 +5,7 @@ const fs = require("fs");
 
 // Usando a lib path para conseguir utilizar os arquivos locais do sistema como banco de dados em Json e as paginas web criadas
 const path = require("path");
+const { json } = require("stream/consumers");
 
 // Exportando o banco de dados Json
 const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
@@ -34,6 +35,14 @@ app.get("/login", function(request, response){
 
 app.get("/cadastro", function(request, response){
     response.sendFile(path.join(__dirname, "public", "pages", "cadastro.html"));
+});
+
+app.get("/cursos", function(request,response){
+    response.sendFile(path.join(__dirname, "public", "pages", "cursos.html"));
+});
+
+app.get("/api/cursos", function(request, response){
+    response.json(db.cursos);
 });
 
 // ================== Rotas para POST =======================
