@@ -86,8 +86,18 @@ app.post("/cadastro", function(request, response){
         return;
     }
 
+    const usuarios = Object.values(db.usuarios);
+
+    let maiorId = 0;
+
+    usuarios.forEach(function(usuario) {
+        if (usuario.id_usuario > maiorId) {
+            maiorId = usuario.id_usuario;
+        }
+    });
+
     db.usuarios[email] = {
-        id_usuario: 2,
+        id_usuario: maiorId + 1,
         nome: nome,
         sobrenome: sobrenome,
         senha: senha
