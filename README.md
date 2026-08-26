@@ -9,20 +9,53 @@ Projeto desenvolvido para fins de estudo, utilizando HTML, JavaScript e Node.js.
 * Node.js
 * Express
 
+```
 ## Estrutura do projeto
 
 ```text
 Dados-PI-Transforme-se/
-├── backend/
-│   ├── database/
-│   └── logic/
+
+
 ├── public/
 │   ├── index.html
-│   └── pages/
+│   │
+│   ├── pages/
+│   │   ├── cadastro.html
+│   │   ├── cursos.html
+│   │   ├── login.html
+│   │   ├── saldos.html
+│   │   └── tarefas.html
+│   │
+│   └── scripts/
+│       ├── cadastro.js
+│       ├── cursos.js
+│       └── login.js
+│
+├── db.json
+├── .gitignore
+├── README.md
 ├── server.js
 ├── package.json
 └── package-lock.json
 ```
+
+### Organização das pastas
+
+A pasta `public/` contém os arquivos acessíveis pelo navegador.
+
+* `index.html`: página inicial da aplicação.
+* `pages/`: contém as demais páginas do sistema.
+* `scripts/`: contém os arquivos JavaScript responsáveis pelas funcionalidades das páginas e manipulação com DOM.
+
+Na raiz do projeto:
+
+* `server.js`: configura e executa o servidor da aplicação.
+* `db.json`: contém os arquivos responsáveis pelo armazenamento e manipulação dos dados.
+* `package.json`: contém as informações do projeto e suas dependências.
+* `package-lock.json`: registra as versões exatas das dependências instaladas.
+* `.gitignore`: define quais arquivos e diretórios não devem ser enviados ao Git.
+* `README.md`: contém a documentação e as instruções de utilização do projeto.
+
 
 ## Pré-requisitos
 
