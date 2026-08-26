@@ -9,48 +9,6 @@ export const professores = {
   5:{ id_professor: 5, nome: "Juliana Ferreira", cpf: "741.852.963-00"}
 }
 
-// Dados de Cursos (Matheus)
-// id, nome, cargahoraria, avaliação, modulo, genero, id_professor, id_usuario, preço e descrição
-export const cursos = {
-// id_usuarios é uma lista com todos os usuários que compraram aquele curso
-  1: {
-    id_curso: 1,
-    nome: "Como controlar suas finanças",
-    carga_horaria: 60,
-    avaliacao: 4.5,
-    modulos: [
-    "Introdução à Finanças",
-    "Educação Financeira",
-    "Investimentos",
-    "Mercado Financeiro",
-    "Análise de Risco"
-    ],
-    genero: "Finanças",
-    id_professor: 1,
-    id_usuarios: [1],
-    descricao: "Aprenda a ter controle total do seu dinheiro.",
-    preco: "grátis"
-  },
-  
-  2: {
-    id_curso: 2,
-    nome: "Montando a sua estratégia",
-    carga_horaria: 30,
-    avaliacao: 4.8,
-    modulos: [
-    "Fundamentos do Marketing",
-    "Público-Alvo e Persona",
-    "Estratégia de Marketing Digital",
-    "Publicidade e Mídia Paga",
-    ],
-    genero: "Marketing",
-    id_professor: 2,
-    id_usuarios: [1],
-    descricao: "Aprenda a montar sua estratégia de marketing.",
-    preco: "R$ 9,99"
-  }
-}
-
 // Dados de To Do List (Marcio)
 // id_usuario, titulo, descricao
 // Dicionário grande de tarefas (To Do List)
