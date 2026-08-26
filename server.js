@@ -79,7 +79,10 @@ app.post("/cadastro", function(request, response){
     const {nome, sobrenome, email, senha} = request.body;
     
     if(db.usuarios[email]){
-        response.send("Invalido");
+            response.json({
+                sucesso: false
+            });
+
         return;
     }
 
@@ -94,6 +97,11 @@ app.post("/cadastro", function(request, response){
         path.join(__dirname, "db.json"),
         JSON.stringify(db, null, 4)
     );
+    
+    response.json({
+        sucesso: true
+    });
+
 });
 
 // Sobe o servidor na porta 3000
