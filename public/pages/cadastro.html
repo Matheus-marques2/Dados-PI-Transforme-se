@@ -10,7 +10,7 @@
     <h1>Cadastrar usuário</h1>
 
     <!-- Nome, sobrenome, email, senha e id com auto incremento -->
-    <form action="/cadastro" id="formCadastro" method="POST">
+    <form id="formCadastro">
         <label for="nome">Nome:</label>
         <input type="text" name="nome" id="nome" required>
 
@@ -25,6 +25,10 @@
 
         <button type="submit">Cadastrar</button>
     </form>
+
+    <div id="mensagem"></div>
+
+    <script src="../scripts/cadastro.js"></script>
 
 </body>
 </html>
