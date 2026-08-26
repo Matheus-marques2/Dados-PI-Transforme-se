@@ -1,54 +1,27 @@
 // DOM para pagina de cadastro
-
-const formulario = document.getElementById("formCadastro");
-
-formulario.addEventListener("submit", function(event) {
+document.querySelector("form").addEventListener("submit", async(event) => {
 
     event.preventDefault();
 
-    cadastrar();
+    const formData = new FormData(event.target);
+    const dados = Object.fromEntries(formData);
 
-});
-
-
-async function cadastrar() {
-
-    const nome = document.getElementById("nome").value;
-    const sobrenome = document.getElementById("sobrenome").value;
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
-
-    const resposta = await fetch("/cadastro", {
-
+    const response = await fetch("/cadastro", {
         method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            nome,
-            sobrenome,
-            email,
-            senha
-        })
-
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
     });
 
-    const resultado = await resposta.json();
+    const resultado = await response.json();
 
     const mensagem = document.getElementById("mensagem");
 
-    if (resultado.sucesso) {
-
-        mensagem.textContent = "E-mail cadastrado com sucesso!";
-        mensagem.style.color = "green";
-
-    } else {
-
+    if(!resultado.sucesso) {
         mensagem.textContent = "E-mail já cadastrado!";
         mensagem.style.color = "red";
-
+        return
     }
-
-}
+    
+    mensagem.textContent = "E-mail cadastrado com sucesso!";
+    mensagem.style.color = "green";
+});
