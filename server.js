@@ -2,10 +2,12 @@
 const express = require("express");
 const app = express();
 const fs = require("fs");
+const session = require("express-session");
 
 // Usando a lib path para conseguir utilizar os arquivos locais do sistema como banco de dados em Json e as paginas web criadas
 const path = require("path");
 const { json } = require("stream/consumers");
+const { setDefaultCACertificates } = require("tls");
 
 // Exportando o banco de dados Json
 const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
@@ -21,6 +23,17 @@ app.use(express.urlencoded( {extended: true} ));
 
 app.use(express.json());
 
+// ================== MIDLEWARE para configurar sessão =======================
+
+app.use(session({
+    secret: "palavra-chave",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: false,
+        maxAge: 1000 * 60 * 60
+    }
+}))
+
 // ================== Rotas GET para renderizar páginas =======================
 
 
@@ -34,33 +47,6 @@ app.get("/login", function(request, response){
 
 });
 
-app.post("/login", function(request, response) {
-
-    const { emailDigitado, senhaDigitada } = request.body;
-
-    // tem que localizar o usuario pelo o email 
-    const usuario = db.usuarios[emailDigitado];
-
-    console.log(usuario);
-
-    // vai verifica se a pessoa existe
-    if (!usuario) {
-        response.send("Email inválidos");
-        return;
-    }
-
-    console.log(senhaDigitada);
-
-    // aqui verfifica a senha do usuario
-    if (usuario.senha !== senhaDigitada) {
-        response.send("Senha incorreta");
-        return;
-    }
-
-    // Login correto
-    response.send("Login realizado com sucesso!");
-});
-
 app.get("/cadastro", function(request, response){
     response.sendFile(path.join(__dirname, "public", "pages", "cadastro.html"));
 });
@@ -71,6 +57,15 @@ app.get("/cursos", function(request,response){
 
 app.get("/api/cursos", function(request, response){
     response.json(db.cursos);
+});
+
+//Rota de api para o front consumir e conseguir ver se o user está logado
+app.get("/api/usuario-logado", function(request, response){
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+    response.json(request.session.usuario);
 });
 
 // ================== Rotas para POST =======================
@@ -113,6 +108,38 @@ app.post("/cadastro", function(request, response){
     });
 
 });
+
+app.post("/login", function(request, response) {
+
+    const { emailDigitado, senhaDigitada } = request.body;
+
+    // tem que localizar o usuario pelo o email 
+    const usuario = db.usuarios[emailDigitado];
+
+    console.log(usuario);
+
+    // vai verifica se a pessoa existe
+    if (!usuario) {
+        response.send("Email inválido");
+        return;
+    }
+
+    // aqui verfifica a senha do usuario
+    if (usuario.senha !== senhaDigitada) {
+        response.send("Senha incorreta");
+        return;
+    }
+
+    //armazena os dados do usuário logado na sessão
+    request.session.usuario = {
+        nome: usuario.nome,
+        email: emailDigitado
+    }
+
+    // Login correto
+    response.send("Login realizado com sucesso!");
+});
+
 
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal
