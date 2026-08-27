@@ -22,7 +22,7 @@
         "1": {
             "id_curso": 1,
             "nome": "Como controlar suas finanças",
-            "carga_horaria": 60,
+            "carga_horaria": "20 Min",
             "avaliacao": 4.5,
             "modulos": [
             "Introdução à Finanças",
@@ -35,13 +35,14 @@
             "id_professor": 1,
             "id_usuarios": [1],
             "descricao": "Aprenda a ter controle total do seu dinheiro.",
-            "preco": "grátis"
+            "preco": "grátis",
+            "imagem": "curso-1.jpeg"
         },
 
         "2": {
             "id_curso": 2,
             "nome": "Montando a sua estratégia",
-            "carga_horaria": 30,
+            "carga_horaria": "27 Min",
             "avaliacao": 4.8,
             "modulos": [
             "Fundamentos do Marketing",
@@ -53,7 +54,8 @@
             "id_professor": 2,
             "id_usuarios": [1],
             "descricao": "Aprenda a montar sua estratégia de marketing.",
-            "preco": "R$ 9,99"
+            "preco": "R$ 9,99",
+            "imagem": "curso-2.jpeg"
         }
  
     },
