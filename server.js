@@ -55,6 +55,10 @@ app.get("/cursos", function(request,response){
     response.sendFile(path.join(__dirname, "public", "pages", "cursos.html"));
 });
 
+app.get("/tarefas", function(request,response){
+    response.sendFile(path.join(__dirname, "public", "pages", "tarefas.html"));
+});
+
 app.get("/api/cursos", function(request, response){
     response.json(db.cursos);
 });
