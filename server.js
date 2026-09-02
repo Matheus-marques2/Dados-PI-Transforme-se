@@ -55,10 +55,6 @@ app.get("/cursos", function(request,response){
     response.sendFile(path.join(__dirname, "public", "pages", "cursos.html"));
 });
 
-app.get("/tarefas", function(request,response){
-    response.sendFile(path.join(__dirname, "public", "pages", "tarefas.html"));
-});
-
 app.get("/api/cursos", function(request, response){
     response.json(db.cursos);
 });
@@ -70,6 +66,25 @@ app.get("/api/usuario-logado", function(request, response){
         return;
     }
     response.json(request.session.usuario);
+});
+
+// Rota de api para o front buscar somente as tarefas do usuário que está logado
+app.get("/api/tarefas", function(request, response){
+
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const idUsuarioLogado = request.session.usuario.id_usuario;
+
+    const todasTarefas = Object.values(db.tarefas);
+
+    const tarefasDoUsuario = todasTarefas.filter(function(tarefa) {
+        return tarefa.id_usuario === idUsuarioLogado;
+    });
+
+    response.json(tarefasDoUsuario);
 });
 
 // ================== Rotas para POST =======================
@@ -136,6 +151,7 @@ app.post("/login", function(request, response) {
 
     //armazena os dados do usuário logado na sessão
     request.session.usuario = {
+        id_usuario: usuario.id_usuario,
         nome: usuario.nome,
         email: emailDigitado
     }
@@ -144,6 +160,91 @@ app.post("/login", function(request, response) {
     response.send("Login realizado com sucesso!");
 });
 
+
+app.post("/tarefas", function(request, response){
+
+    // Só deixa criar tarefa se o usuário estiver logado
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const { titulo, descricao } = request.body;
+
+    if(!titulo){
+        response.status(400).json({ erro: "O título da tarefa é obrigatório" });
+        return;
+    }
+
+    const tarefas = Object.values(db.tarefas);
+
+    let maiorId = 0;
+
+    tarefas.forEach(function(tarefa) {
+        if (tarefa.id > maiorId) {
+            maiorId = tarefa.id;
+        }
+    });
+
+    const novoId = maiorId + 1;
+
+    const novaTarefa = {
+        id: novoId,
+        id_usuario: request.session.usuario.id_usuario,
+        titulo: titulo,
+        descricao: descricao || ""
+    };
+
+    db.tarefas[novoId] = novaTarefa;
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+
+    response.json({
+        sucesso: true,
+        tarefa: novaTarefa
+    });
+
+});
+
+app.delete("/tarefas/:id", function(request, response){
+
+    // Só deixa apagar tarefa se o usuário estiver logado
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const idTarefa = request.params.id;
+
+    const tarefa = db.tarefas[idTarefa];
+
+    // Verifica se a tarefa existe
+    if(!tarefa){
+        response.status(404).json({ erro: "Tarefa não encontrada" });
+        return;
+    }
+
+    // Verifica se a tarefa pertence ao usuário logado (ninguém apaga tarefa de outra pessoa)
+    if(tarefa.id_usuario !== request.session.usuario.id_usuario){
+        response.status(403).json({ erro: "Essa tarefa não pertence a você" });
+        return;
+    }
+
+    delete db.tarefas[idTarefa];
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+
+    response.json({
+        sucesso: true
+    });
+
+});
 
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal
