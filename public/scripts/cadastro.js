@@ -33,4 +33,7 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     // Caso contrário, o cadastro foi realizado com sucesso
     mensagem.textContent = "E-mail cadastrado com sucesso!";
     mensagem.style.color = "green";
+
+    // Redireciona o usuário para a página de login
+    window.location.href = "/login";
 });
