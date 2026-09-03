@@ -92,7 +92,7 @@ app.get("/api/tarefas", function(request, response){
 app.post("/cadastro", function(request, response){
     const {nome, sobrenome, email, senha} = request.body;
     
-    if(db.usuarios[email]){
+    if(db.usuarios[email.trim().toLowerCase()]){
             response.json({
                 sucesso: false
             });
@@ -110,7 +110,7 @@ app.post("/cadastro", function(request, response){
         }
     });
 
-    db.usuarios[email] = {
+    db.usuarios[email.trim().toLowerCase()] = {
         id_usuario: maiorId + 1,
         nome: nome,
         sobrenome: sobrenome,
@@ -133,7 +133,7 @@ app.post("/login", function(request, response) {
     const { emailDigitado, senhaDigitada } = request.body;
 
     // tem que localizar o usuario pelo o email 
-    const usuario = db.usuarios[emailDigitado];
+    const usuario = db.usuarios[emailDigitado.trim().toLowerCase()];
 
     console.log(usuario);
 
