@@ -55,6 +55,10 @@ app.get("/cursos", function(request,response){
     response.sendFile(path.join(__dirname, "public", "pages", "cursos.html"));
 });
 
+app.get("/perfil", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "pages", "perfil.html"));
+});
+
 app.get("/api/cursos", function(request, response){
     response.json(db.cursos);
 });
@@ -86,6 +90,31 @@ app.get("/api/tarefas", function(request, response){
 
     response.json(tarefasDoUsuario);
 });
+
+app.get("/api/perfil", function(request,response){
+    if(!request.session.usuario){
+        response.status(401).json({erro: "Não autenticado"});
+        return;
+    }
+
+    const usuario = db.usuarios[request.session.usuario.email];
+
+    if(!usuario){
+        response.status(404).json({erro: "Usuário não encontrado"});
+        return;
+    }
+
+    response.json({
+        nome: usuario.nome,
+        email: request.session.usuario.email,
+        pronome: usuario.pronome || "",
+        cnpj: usuario.cnpj || "",
+        sobre: usuario.sobre || "",
+        numero: usuario.numero
+    })
+})
+
+
 
 // ================== Rotas para POST =======================
 
@@ -245,6 +274,49 @@ app.delete("/tarefas/:id", function(request, response){
     });
 
 });
+
+// ================== Rotas para PUT =======================
+
+app.put("/api/perfil", function(request, response){
+    if(!request.session.usuario){
+        response.status(400).json({erro: "Não autenticado"})
+        return;
+    }
+
+    const emailAtual = request.session.usuario.email;
+    const usuario = db.usuarios[emailAtual];
+
+    const {nome, pronome, email, sobre, numero, cnpj} = request.body;
+    const novoEmail = email.trim().toLowerCase();
+
+    if(novoEmail !== emailAtual){
+        if(db.usuarios[novoEmail]){
+            response.status(401).json({erro: "Email já está sendo utilizado."});
+            return;
+        }
+
+        delete db.usuarios[emailAtual];
+        db.usuarios[novoEmail] = usuario;
+    }
+
+    //atualiza os campos no obejto
+    usuario.nome = nome;
+    usuario.sobre = sobre;
+    usuario.numero = numero;
+    usuario.cnpj = cnpj;
+    usuario.pronome = pronome;
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+
+    //mantém a sessão atual com os dados novos
+    request.session.usuario.nome = nome;
+    request.session.usuario.email = novoEmail;
+
+    response.json({sucesso: true});
+})
 
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal

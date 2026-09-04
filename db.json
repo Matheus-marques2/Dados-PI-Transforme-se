@@ -3,27 +3,46 @@
         "sabrina@gmail.com": {
             "id_usuario": 1,
             "nome": "Sabrina Barros",
-            "senha": "123456"
+            "senha": "123456",
+            "cnpj": "",
+            "numero": "",
+            "pronome": "",
+            "sobre": ""
         },
         "carlos@gmail.com": {
             "id_usuario": 2,
             "nome": "Carlos Henrique",
-            "senha": "123456"
+            "senha": "123456",
+            "cnpj": "",
+            "numero": "",
+            "pronome": "",
+            "sobre": ""
         },
         "marcio@gmail.com": {
             "id_usuario": 3,
             "nome": "Marcio Eduardo",
-            "senha": "123456"
+            "senha": "123456",
+            "cnpj": "",
+            "numero": "",
+            "pronome": "",
+            "sobre": ""
         },
         "ewerton@gmail.com": {
             "id_usuario": 4,
             "nome": "Ewerton Henrique",
-            "senha": "123456"
+            "senha": "123456",
+            "cnpj": "",
+            "numero": "",
+            "pronome": "",
+            "sobre": ""
         },
         "matheus@gmail.com": {
             "id_usuario": 5,
             "nome": "Matheus Marques",
-            "senha": "123456"
+            "senha": "123456",
+            "numero": "",
+            "pronome": "",
+            "sobre": ""
         }
     },
     "saldos": {
