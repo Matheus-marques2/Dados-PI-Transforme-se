@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const session = require("express-session");
+const { body, validationResult } = require("express-validator");
 
 // Usando a lib path para conseguir utilizar os arquivos locais do sistema como banco de dados em Json e as paginas web criadas
 const path = require("path");
@@ -118,9 +119,20 @@ app.get("/api/perfil", function(request,response){
 
 // ================== Rotas para POST =======================
 
-app.post("/cadastro", function(request, response){
+app.post("/cadastro", [
+    body("nome").notEmpty().withMessage("Nome é um campo obrigatório, preencha-o."),
+    body("sobrenome").notEmpty().withMessage("Sobrenome é um campo obrigatório, preencha-o."),
+    body("senha").notEmpty().withMessage("Senha é um campo obrigatório, preencha-o."),
+    body("email").isEmail().withMessage("Nome é um campo obrigatório, preencha-o."),
+], function(request, response){
     const {nome, sobrenome, email, senha} = request.body;
     
+    const errors = validationResult(request);
+
+    if(!errors.isEmpty()){
+        return response.status(400).json({errors: errors.array()});
+    }
+
     if(db.usuarios[email.trim().toLowerCase()]){
             response.json({
                 sucesso: false
