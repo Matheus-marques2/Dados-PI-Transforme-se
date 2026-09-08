@@ -63,6 +63,10 @@ app.get("/financeiro", function(request, response){
     response.sendFile(path.join(__dirname, "public", "Financeiro", "VisãoGeral", "index.html"));
 });
 
+app.get("/tarefas", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "Atividades", "VisãoGeral", "index.html"));
+});
+
 app.get("/api/cursos", function(request, response){
     response.json(db.cursos);
 });
