@@ -1,0 +1,164 @@
+html
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Configurações</title>
+
+    C:\Users\SABRINAVITÓRIADEBARR\Desktop\PIback\Dados-PI-Transforme-se
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="cabecalho">
+            <h1>Configurações</h1>
+
+            <a href="perfil.html">
+                ← Voltar
+            </a>
+        </div>
+
+
+        <!-- PREFERÊNCIAS -->
+
+        <section class="card">
+
+            <h2>Preferências</h2>
+
+            <div class="item">
+
+                <div>
+                    <h3>Notificações</h3>
+
+                    <p>
+                        Receber notificações da plataforma.
+                    </p>
+                </div>
+
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+
+            <div class="item">
+
+                <div>
+                    <h3>Aparência</h3>
+
+                    <p>
+                        Escolha o tema da plataforma.
+                    </p>
+                </div>
+
+                <select id="tema">
+
+                    <option value="claro">
+                        Tema claro
+                    </option>
+
+                    <option value="escuro">
+                        Tema escuro
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="item">
+
+                <div>
+                    <h3>Idioma</h3>
+
+                    <p>
+                        Escolha o idioma da plataforma.
+                    </p>
+                </div>
+
+                <select>
+
+                    <option>
+                        Português
+                    </option>
+
+                    <option>
+                        Inglês
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SEGURANÇA -->
+
+        <section class="card">
+
+            <h2>Segurança</h2>
+
+
+            <div class="item">
+
+                <div>
+                    <h3>Autenticação em dois fatores</h3>
+
+                    <p>
+                        Adicione uma camada extra de segurança.
+                    </p>
+                </div>
+
+                <label class="switch">
+
+                    <input type="checkbox">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="senha">
+
+                <h3>Trocar senha</h3>
+
+                <input
+                    type="password"
+                    placeholder="Senha atual"
+                >
+
+                <input
+                    type="password"
+                    placeholder="Nova senha"
+                >
+
+                <input
+                    type="password"
+                    placeholder="Confirmar nova senha"
+                >
+
+                <button>
+                    Alterar senha
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+<script src="../js/configuracoes.js"></script>  
+</body>
+
+</html>
+```

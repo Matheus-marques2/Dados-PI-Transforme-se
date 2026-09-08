@@ -66,6 +66,14 @@ app.get("/financeiro", function(request, response){
 app.get("/tarefas", function(request, response){
     response.sendFile(path.join(__dirname, "public", "Atividades", "VisãoGeral", "index.html"));
 });
+// adicionei 
+app.get("/configuracoes", function(request, response){
+
+    response.sendFile(
+        path.join(__dirname, "public", "pages", "configuracoes.html")
+    );
+
+});
 
 app.get("/api/cursos", function(request, response){
     response.json(db.cursos);
