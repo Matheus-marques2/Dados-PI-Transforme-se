@@ -44,20 +44,23 @@ app.get("/", function(request, response){
 });
 
 app.get("/login", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "login.html"));
-
+    response.sendFile(path.join(__dirname, "public", "auth", "login", "index.html"));
 });
 
 app.get("/cadastro", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "cadastro.html"));
+    response.sendFile(path.join(__dirname, "public", "auth", "cadastro", "index.html"));
 });
 
 app.get("/cursos", function(request,response){
-    response.sendFile(path.join(__dirname, "public", "pages", "cursos.html"));
+    response.sendFile(path.join(__dirname, "public", "Financeiro", "VisãoGeral", "index.html"));
 });
 
 app.get("/perfil", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "perfil.html"));
+    response.sendFile(path.join(__dirname, "public", "Menu", "InformaçõesPessoais", "index.html"));
+});
+
+app.get("/financeiro", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "Financeiro", "VisãoGeral", "index.html"));
 });
 
 app.get("/api/cursos", function(request, response){
@@ -114,8 +117,6 @@ app.get("/api/perfil", function(request,response){
         numero: usuario.numero
     })
 })
-
-
 
 // ================== Rotas para POST =======================
 
