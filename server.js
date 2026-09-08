@@ -68,11 +68,7 @@ app.get("/tarefas", function(request, response){
 });
 // adicionei 
 app.get("/configuracoes", function(request, response){
-
-    response.sendFile(
-        path.join(__dirname, "public", "pages", "configuracoes.html")
-    );
-
+    response.sendFile(path.join(__dirname, "public", "Configuração", "configuracoes.html"));
 });
 
 app.get("/api/cursos", function(request, response){
