@@ -56,6 +56,10 @@ app.get("/cursos", function(request,response){
     response.sendFile(path.join(__dirname, "public", "pages", "cursos.html"));
 });
 
+app.get("/mentorias", function(request,response){
+    response.sendFile(path.join(__dirname, "public", "pages", "mentorias.html"));
+});
+
 app.get("/perfil", function(request, response){
     response.sendFile(path.join(__dirname, "public", "pages", "perfil.html"));
 });
@@ -113,7 +117,22 @@ app.get("/api/perfil", function(request,response){
         sobre: usuario.sobre || "",
         numero: usuario.numero
     })
-})
+});
+
+app.get("/api/mentorias", function(request, response){
+    const mentoriasComProfessor = {};
+
+    Object.entries(db.mentorias).forEach(function([id, mentoria]){
+        const professor = db.professores[mentoria.id_professor];
+
+        mentoriasComProfessor[id] = {
+            ...mentoria,
+            mentor: professor ? professor.nome : "Mentor não encontrado"
+        };
+    });
+
+    response.json(mentoriasComProfessor);
+});
 
 
 
