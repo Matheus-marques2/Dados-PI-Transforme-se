@@ -52,11 +52,11 @@ app.get("/cadastro", function(request, response){
 });
 
 app.get("/cursos", function(request,response){
-    response.sendFile(path.join(__dirname, "public", "Financeiro", "VisãoGeral", "index.html"));
+    response.sendFile(path.join(__dirname, "public", "Mentorias", "Cursos", "index.html"));
 });
 
 app.get("/mentorias", function(request,response){
-    response.sendFile(path.join(__dirname, "public", "pages", "mentorias.html"));
+    response.sendFile(path.join(__dirname, "public", "Mentorias", "Mentoria", "index.html"));
 });
 
 app.get("/perfil", function(request, response){
