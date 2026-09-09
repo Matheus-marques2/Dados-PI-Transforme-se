@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário</title>
+    <style>
+        table { border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; width: 40px; height: 40px; text-align: center; }
+        .diaCalendario { cursor: pointer; }
+        .diaCalendario:hover { background: #eee; }
+        .diaComEvento { font-weight: bold; background: #ffe9a8; }
+        .diaSelecionado { outline: 2px solid #333; }
+        #painelDia { margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <h2>Meu calendário</h2>
+
+    <div id="cabecalhoCalendario">
+        <button id="btnMesAnterior">&lt;</button>
+        <span id="tituloMesAno"></span>
+        <button id="btnProximoMes">&gt;</button>
+    </div>
+
+    <table id="tabelaCalendario">
+        <thead>
+            <tr>
+                <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
+            </tr>
+        </thead>
+        <tbody id="corpoCalendario"></tbody>
+    </table>
+
+    <div id="painelDia" style="display:none;">
+        <h3 id="tituloDiaSelecionado"></h3>
+        <ul id="listaEventosDia"></ul>
+
+        <input type="text" id="inputTituloEvento" placeholder="Título do evento..."/>
+        <textarea id="inputDescricaoEvento" placeholder="Descrição (opcional)..."></textarea>
+        <button id="btnAdicionarEvento">Adicionar Evento</button>
+    </div>
+
+    <script src="logic/calendario/calendario.js"></script>
+</body>
+</html>

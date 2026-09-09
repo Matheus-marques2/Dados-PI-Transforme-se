@@ -44,16 +44,15 @@ app.get("/", function(request, response){
 });
 
 app.get("/login", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "login.html"));
-
+    response.sendFile(path.join(__dirname, "public", "auth", "login", "index.html"));
 });
 
 app.get("/cadastro", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "cadastro.html"));
+    response.sendFile(path.join(__dirname, "public", "auth", "cadastro", "index.html"));
 });
 
 app.get("/cursos", function(request,response){
-    response.sendFile(path.join(__dirname, "public", "pages", "cursos.html"));
+    response.sendFile(path.join(__dirname, "public", "Financeiro", "VisãoGeral", "index.html"));
 });
 
 app.get("/mentorias", function(request,response){
@@ -61,7 +60,19 @@ app.get("/mentorias", function(request,response){
 });
 
 app.get("/perfil", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "perfil.html"));
+    response.sendFile(path.join(__dirname, "public", "Menu", "InformaçõesPessoais", "index.html"));
+});
+
+app.get("/financeiro", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "Financeiro", "VisãoGeral", "index.html"));
+});
+
+app.get("/tarefas", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "Atividades", "VisãoGeral", "index.html"));
+});
+// adicionei 
+app.get("/configuracoes", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "Configuração", "configuracoes.html"));
 });
 
 app.get("/api/cursos", function(request, response){
@@ -133,8 +144,6 @@ app.get("/api/mentorias", function(request, response){
 
     response.json(mentoriasComProfessor);
 });
-
-
 
 // ================== Rotas para POST =======================
 
@@ -252,7 +261,8 @@ app.post("/tarefas", function(request, response){
         id: novoId,
         id_usuario: request.session.usuario.id_usuario,
         titulo: titulo,
-        descricao: descricao || ""
+        descricao: descricao || "",
+        status: "pendente"
     };
 
     db.tarefas[novoId] = novaTarefa;
@@ -306,6 +316,61 @@ app.delete("/tarefas/:id", function(request, response){
 
 });
 
+// Atualiza título, descrição e/ou status de uma tarefa (edição do CRUD)
+app.put("/tarefas/:id", function(request, response){
+
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const idTarefa = request.params.id;
+    const tarefa = db.tarefas[idTarefa];
+
+    if(!tarefa){
+        response.status(404).json({ erro: "Tarefa não encontrada" });
+        return;
+    }
+
+    if(tarefa.id_usuario !== request.session.usuario.id_usuario){
+        response.status(403).json({ erro: "Essa tarefa não pertence a você" });
+        return;
+    }
+
+    const { titulo, descricao, status } = request.body;
+
+    if(titulo !== undefined){
+        if(!titulo.trim()){
+            response.status(400).json({ erro: "O título da tarefa é obrigatório" });
+            return;
+        }
+        tarefa.titulo = titulo;
+    }
+
+    if(descricao !== undefined){
+        tarefa.descricao = descricao;
+    }
+
+    if(status !== undefined){
+        if(status !== "pendente" && status !== "concluida"){
+            response.status(400).json({ erro: "Status inválido, use 'pendente' ou 'concluida'" });
+            return;
+        }
+        tarefa.status = status;
+    }
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+
+    response.json({
+        sucesso: true,
+        tarefa: tarefa
+    });
+
+});
+
 // ================== Rotas para PUT =======================
 
 app.put("/api/perfil", function(request, response){
@@ -348,7 +413,170 @@ app.put("/api/perfil", function(request, response){
 
     response.json({sucesso: true});
 })
+// ================== Rotas de Calendário (eventos por dia) =======================
 
+// Lista os eventos do usuário logado. Aceita filtro opcional por mês/ano:
+// GET /api/eventos?mes=9&ano=2026
+app.get("/api/eventos", function(request, response){
+
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const idUsuarioLogado = request.session.usuario.id_usuario;
+    const { mes, ano } = request.query;
+
+    let eventosDoUsuario = Object.values(db.eventos).filter(function(evento) {
+        return evento.id_usuario === idUsuarioLogado;
+    });
+
+    if (mes && ano) {
+        eventosDoUsuario = eventosDoUsuario.filter(function(evento) {
+            const [anoEvento, mesEvento] = evento.data.split("-");
+            return Number(mesEvento) === Number(mes) && Number(anoEvento) === Number(ano);
+        });
+    }
+
+    response.json(eventosDoUsuario);
+});
+
+// Cria um novo evento marcado em uma data (formato AAAA-MM-DD)
+app.post("/eventos", function(request, response){
+
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const { data, titulo, descricao } = request.body;
+
+    if(!data || !/^\d{4}-\d{2}-\d{2}$/.test(data)){
+        response.status(400).json({ erro: "Informe uma data válida no formato AAAA-MM-DD" });
+        return;
+    }
+
+    if(!titulo){
+        response.status(400).json({ erro: "O título do evento é obrigatório" });
+        return;
+    }
+
+    const eventos = Object.values(db.eventos);
+
+    let maiorId = 0;
+    eventos.forEach(function(evento) {
+        if (evento.id > maiorId) {
+            maiorId = evento.id;
+        }
+    });
+
+    const novoId = maiorId + 1;
+
+    const novoEvento = {
+        id: novoId,
+        id_usuario: request.session.usuario.id_usuario,
+        data: data,
+        titulo: titulo,
+        descricao: descricao || ""
+    };
+
+    db.eventos[novoId] = novoEvento;
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+
+    response.json({
+        sucesso: true,
+        evento: novoEvento
+    });
+});
+
+// Edita data, título e/ou descrição de um evento
+app.put("/eventos/:id", function(request, response){
+
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const idEvento = request.params.id;
+    const evento = db.eventos[idEvento];
+
+    if(!evento){
+        response.status(404).json({ erro: "Evento não encontrado" });
+        return;
+    }
+
+    if(evento.id_usuario !== request.session.usuario.id_usuario){
+        response.status(403).json({ erro: "Esse evento não pertence a você" });
+        return;
+    }
+
+    const { data, titulo, descricao } = request.body;
+
+    if(data !== undefined){
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(data)){
+            response.status(400).json({ erro: "Data inválida, use o formato AAAA-MM-DD" });
+            return;
+        }
+        evento.data = data;
+    }
+
+    if(titulo !== undefined){
+        if(!titulo.trim()){
+            response.status(400).json({ erro: "O título do evento é obrigatório" });
+            return;
+        }
+        evento.titulo = titulo;
+    }
+
+    if(descricao !== undefined){
+        evento.descricao = descricao;
+    }
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+
+    response.json({
+        sucesso: true,
+        evento: evento
+    });
+});
+
+// Apaga um evento
+app.delete("/eventos/:id", function(request, response){
+
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const idEvento = request.params.id;
+    const evento = db.eventos[idEvento];
+
+    if(!evento){
+        response.status(404).json({ erro: "Evento não encontrado" });
+        return;
+    }
+
+    if(evento.id_usuario !== request.session.usuario.id_usuario){
+        response.status(403).json({ erro: "Esse evento não pertence a você" });
+        return;
+    }
+
+    delete db.eventos[idEvento];
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+
+    response.json({ sucesso: true });
+});
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal
 // use CTRL + Click no link gerado ou abra o localhost:3000 no seu navegador
