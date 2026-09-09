@@ -1,7 +1,5 @@
-// Pega a referência do <ul id="listaTarefas"> que está no tarefas.html
 const listaTarefas = document.getElementById("listaTarefas");
 
-// Função responsável por buscar as tarefas na API e desenhar elas na tela
 function carregarTarefas() {
 
     fetch("/api/tarefas")
@@ -10,30 +8,52 @@ function carregarTarefas() {
         })
         .then(function(tarefas) {
 
-            // Limpa a lista antes de redesenhar, evita duplicar itens
             listaTarefas.innerHTML = "";
 
             tarefas.forEach(function(tarefa) {
 
-                // Cria o <li> da tarefa
+                const status = tarefa.status || "pendente";
+
                 const li = document.createElement("li");
-
-                // Guarda o id da tarefa no próprio elemento, o botão de deletar vai usar isso
                 li.dataset.id = tarefa.id;
+                li.dataset.status = status;
+                li.dataset.titulo = tarefa.titulo;
+                li.dataset.descricao = tarefa.descricao || "";
 
-                // Texto mostrado: título e, se tiver, a descrição
-                li.textContent = tarefa.titulo;
+                const textoSpan = document.createElement("span");
+                textoSpan.classList.add("textoTarefa");
+                textoSpan.textContent = tarefa.titulo;
 
                 if (tarefa.descricao) {
-                    li.textContent += " - " + tarefa.descricao;
+                    textoSpan.textContent += " - " + tarefa.descricao;
                 }
 
-                // Cria o botão de apagar dentro do próprio <li>
+                if (status === "concluida") {
+                    textoSpan.style.textDecoration = "line-through";
+                }
+
+                li.appendChild(textoSpan);
+
+                const statusSpan = document.createElement("span");
+                statusSpan.classList.add("statusTarefa");
+                statusSpan.textContent = " [" + (status === "concluida" ? "Concluída" : "Pendente") + "]";
+                li.appendChild(statusSpan);
+
+                const btnStatus = document.createElement("button");
+                btnStatus.textContent = status === "concluida" ? "Reabrir" : "Concluir";
+                btnStatus.classList.add("btnStatusTarefa");
+                li.appendChild(btnStatus);
+
+                const btnEditar = document.createElement("button");
+                btnEditar.textContent = "Editar";
+                btnEditar.classList.add("btnEditarTarefa");
+                li.appendChild(btnEditar);
+
                 const btnApagar = document.createElement("button");
                 btnApagar.textContent = "Apagar";
                 btnApagar.classList.add("btnApagarTarefa");
-
                 li.appendChild(btnApagar);
+
                 listaTarefas.appendChild(li);
             });
         })
@@ -42,5 +62,4 @@ function carregarTarefas() {
         });
 }
 
-// Assim que a página carrega, já busca as tarefas do usuário
 carregarTarefas();

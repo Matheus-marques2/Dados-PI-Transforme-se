@@ -163,6 +163,42 @@
             "id_usuario": 4,
             "titulo": "Organizar espaço de trabalho",
             "descricao": "Limpar a mesa e organizar os materiais de estudo"
+        },
+        "11": {
+            "id": 11,
+            "id_usuario": 2,
+            "titulo": "asdasdasdas",
+            "descricao": "asdasdas"
+        },
+        "12": {
+            "id": 12,
+            "id_usuario": 5,
+            "titulo": "asdasdasdas",
+            "descricao": "sfasfasf",
+            "status": "concluida"
+        },
+        "13": {
+            "id": 13,
+            "id_usuario": 5,
+            "titulo": "aaaa",
+            "descricao": "bbbbbbbbbbbbbb",
+            "status": "concluida"
+        }
+    },
+    "eventos": {
+        "1": {
+            "id": 1,
+            "id_usuario": 1,
+            "data": "2026-09-10",
+            "titulo": "Reunião com cliente",
+            "descricao": "Alinhar detalhes do contrato"
+        },
+        "2": {
+            "id": 2,
+            "id_usuario": 1,
+            "data": "2026-09-15",
+            "titulo": "Pagar boleto",
+            "descricao": ""
         }
     }
 }
