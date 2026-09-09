@@ -75,6 +75,18 @@ app.get("/configuracoes", function(request, response){
     response.sendFile(path.join(__dirname, "public", "Configuração", "configuracoes.html"));
 });
 
+app.get("/obrigacoes", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "MeuMei", "obrigacoes", "index.html"));
+});
+
+app.get("/guias", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "MeuMei", "guias", "index.html"));
+});
+
+app.get("/visaoGeral", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "MeuMei", "visaoGeral", "index.html"));
+});
+
 app.get("/api/cursos", function(request, response){
     response.json(db.cursos);
 });
