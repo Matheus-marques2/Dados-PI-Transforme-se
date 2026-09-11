@@ -227,6 +227,94 @@ app.get("/api/financeiro/movimentacoes", function(request, response) {
     response.json(movimentacoes);
 });
 
+app.post("/api/financeiro/movimentacoes", function(request, response) {
+
+    if (!request.session.usuario) {
+        response.status(401).json({
+            erro: "Não autenticado"
+        });
+        return;
+    }
+
+
+    const { descricao, valor, tipo, data } = request.body;
+
+
+    if (!descricao || !descricao.trim()) {
+        response.status(400).json({
+            erro: "A descrição é obrigatória"
+        });
+        return;
+    }
+
+
+    const valorNumero = Number(valor);
+
+    if (!valorNumero || valorNumero <= 0) {
+        response.status(400).json({
+            erro: "Informe um valor maior que zero"
+        });
+        return;
+    }
+
+
+    if (tipo !== "entrada" && tipo !== "saida") {
+        response.status(400).json({
+            erro: "O tipo deve ser 'entrada' ou 'saida'"
+        });
+        return;
+    }
+
+
+    if (!data || !/^\d{4}-\d{2}-\d{2}$/.test(data)) {
+        response.status(400).json({
+            erro: "Informe uma data no formato AAAA-MM-DD"
+        });
+        return;
+    }
+
+
+    if (!db.movimentacoes) {
+        db.movimentacoes = {};
+    }
+
+
+    const movimentacoes = Object.values(db.movimentacoes);
+
+    let maiorId = 0;
+
+    movimentacoes.forEach(function(movimentacao) {
+        if (movimentacao.id > maiorId) {
+            maiorId = movimentacao.id;
+        }
+    });
+
+
+    const novoId = maiorId + 1;
+
+
+    const novaMovimentacao = {
+        id: novoId,
+        id_usuario: request.session.usuario.id_usuario,
+        descricao: descricao.trim(),
+        valor: valorNumero,
+        tipo: tipo,
+        data: data
+    };
+
+
+    db.movimentacoes[novoId] = novaMovimentacao;
+
+
+    salvarBanco();
+
+
+    response.status(201).json({
+        sucesso: true,
+        movimentacao: novaMovimentacao
+    });
+
+});
 
 // ================== Rotas para POST =======================
 
