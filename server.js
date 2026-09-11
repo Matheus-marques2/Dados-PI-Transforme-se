@@ -213,8 +213,12 @@ app.post("/login", function(request, response) {
 
     const { emailDigitado, senhaDigitada } = request.body;
 
+    // Normaliza o e-mail UMA vez e usa esse mesmo valor pra localizar
+    // o usuário e pra guardar na sessão (evita divergência com o perfil)
+    const emailNormalizado = emailDigitado.trim().toLowerCase();
+    
     // tem que localizar o usuario pelo o email 
-    const usuario = db.usuarios[emailDigitado.trim().toLowerCase()];
+    const usuario = db.usuarios[emailNormalizado];
 
     console.log(usuario);
 
@@ -234,7 +238,7 @@ app.post("/login", function(request, response) {
     request.session.usuario = {
         id_usuario: usuario.id_usuario,
         nome: usuario.nome,
-        email: emailDigitado
+        email: emailNormalizado
     }
 
     // Login correto
@@ -395,7 +399,23 @@ app.put("/api/perfil", function(request, response){
     const usuario = db.usuarios[emailAtual];
 
     const {nome, pronome, email, sobre, numero, cnpj} = request.body;
+
+    //valida presença e tipo ANTES de chamar .trim() (antes disso,
+    // e-mail ausente/undefined derrubava o servidor com erro 500)
+    if(typeof email !== "string" || !email.trim()){
+        response.status(400).json({erro: "O e-mail é obrigatório"});
+        return;
+    }
+    
     const novoEmail = email.trim().toLowerCase();
+
+    // valida o FORMATO do e-mail antes de trocar a chave do usuário
+    // e gravar (normalizar caixa/espaços não garante que seja um e-mail válido)
+    const formatoDeEmailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(novoEmail);
+    if(!formatoDeEmailValido){
+        response.status(400).json({erro: "Informe um e-mail em um formato válido"});
+        return;
+    }
 
     if(novoEmail !== emailAtual){
         if(db.usuarios[novoEmail]){
