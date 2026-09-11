@@ -269,6 +269,43 @@ app.get("/api/financeiro/resumo", function(request, response) {
 
 });
 
+app.delete("/api/financeiro/movimentacoes/:id", function(request, response) {
+
+    if (!request.session.usuario) {
+        response.status(401).json({
+            erro: "Não autenticado"
+        });
+        return;
+    }
+
+    const id = request.params.id;
+    const movimentacao = db.movimentacoes?.[id];
+
+
+    if (!movimentacao) {
+        response.status(404).json({
+            erro: "Movimentação não encontrada"
+        });
+        return;
+    }
+
+
+    if (movimentacao.id_usuario !== request.session.usuario.id_usuario) {
+        response.status(403).json({
+            erro: "Essa movimentação não pertence a você"
+        });
+        return;
+    }
+
+    delete db.movimentacoes[id];
+    salvarBanco();
+
+    response.json({
+        sucesso: true
+    });
+
+});
+
 app.get("/api/financeiro/movimentacoes", function(request, response) {
 
     if (!request.session.usuario) {
@@ -875,7 +912,9 @@ app.delete("/eventos/:id", function(request, response){
     response.json({ sucesso: true });
 });
 
-// ================== Rotas de Planos/Assinaturas =======================
+
+
+// Rotas de Planos/Assinaturas
 
 // Lista todos os planos disponíveis (pública, pra tela de Assinaturas)
 app.get("/api/planos", function(request, response){
