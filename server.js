@@ -589,6 +589,56 @@ app.delete("/eventos/:id", function(request, response){
 
     response.json({ sucesso: true });
 });
+
+// ================== Rotas de Planos/Assinaturas =======================
+
+// Lista todos os planos disponíveis (pública, pra tela de Assinaturas)
+app.get("/api/planos", function(request, response){
+    response.json(db.planos);
+});
+
+// Retorna o plano do usuário logado + suas features
+app.get("/api/planos/atual", function(request, response){
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const plano = pegarPlanoDoUsuario(db, request.session.usuario.id_usuario);
+    response.json(plano);
+});
+
+// "Assina" um plano novo pro usuário logado
+app.post("/api/planos/assinar", function(request, response){
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+
+    const { id_plano } = request.body;
+
+    if(!db.planos[id_plano]){
+        response.status(400).json({ erro: "Plano inválido" });
+        return;
+    }
+
+    const emailUsuario = request.session.usuario.email;
+    db.usuarios[emailUsuario].id_plano = Number(id_plano);
+
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+
+    response.json({
+        sucesso: true,
+        plano: db.planos[id_plano]
+    });
+});
+
+app.get("/assinaturas", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "pages", "assinaturas.html"));
+});
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal
 // use CTRL + Click no link gerado ou abra o localhost:3000 no seu navegador
