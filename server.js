@@ -163,6 +163,112 @@ app.get("/api/mentorias", function(request, response){
     response.json(mentoriasComProfessor);
 });
 
+// Rotas Financeiro
+
+// Retorna o resumo financeiro do usuário logado.
+// Pode receber mês e ano:
+// GET /api/financeiro/resumo?mes=8&ano=2026
+app.get("/api/financeiro/resumo", function(request, response) {
+
+    if (!request.session.usuario) {
+        response.status(401).json({
+            erro: "Não autenticado"
+        });
+        return;
+    }
+
+    const idUsuario = request.session.usuario.id_usuario;
+
+    const hoje = new Date();
+
+    const mes = request.query.mes
+        ? Number(request.query.mes)
+        : hoje.getMonth() + 1;
+
+    const ano = request.query.ano
+        ? Number(request.query.ano)
+        : hoje.getFullYear();
+
+
+    if (mes < 1 || mes > 12 || !Number.isInteger(mes)) {
+        response.status(400).json({
+            erro: "Mês inválido"
+        });
+        return;
+    }
+
+    if (!Number.isInteger(ano)) {
+        response.status(400).json({
+            erro: "Ano inválido"
+        });
+        return;
+    }
+
+
+    const movimentacoes = Object.values(db.movimentacoes || {});
+
+    // Movimentações apenas do usuário logado
+    const movimentacoesUsuario = movimentacoes.filter(function(movimentacao) {
+        return movimentacao.id_usuario === idUsuario;
+    });
+
+
+    // Filtra mês solicitado
+    const movimentacoesMes = movimentacoesUsuario.filter(function(movimentacao) {
+
+        const [anoMovimento, mesMovimento] = movimentacao.data
+            .split("-")
+            .map(Number);
+
+        return anoMovimento === ano && mesMovimento === mes;
+    });
+
+
+    let entradas = 0;
+    let saidas = 0;
+
+    movimentacoesMes.forEach(function(movimentacao) {
+
+        if (movimentacao.tipo === "entrada") {
+            entradas += Number(movimentacao.valor);
+        }
+
+        if (movimentacao.tipo === "saida") {
+            saidas += Number(movimentacao.valor);
+        }
+
+    });
+
+
+    const lucro = entradas - saidas;
+
+    const totalMovimentado = entradas + saidas;
+
+    let percentualEntradas = 0;
+    let percentualSaidas = 0;
+
+    if (totalMovimentado > 0) {
+        percentualEntradas = (entradas / totalMovimentado) * 100;
+        percentualSaidas = (saidas / totalMovimentado) * 100;
+    }
+
+
+    response.json({
+        mes: mes,
+        ano: ano,
+
+        entrada: entradas,
+        saida: saidas,
+        lucro: lucro,
+
+        total_movimentado: totalMovimentado,
+
+        percentual_entradas: Number(percentualEntradas.toFixed(2)),
+        percentual_saidas: Number(percentualSaidas.toFixed(2))
+    });
+
+});
+
 app.get("/api/financeiro/movimentacoes", function(request, response) {
 
     if (!request.session.usuario) {
