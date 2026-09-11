@@ -11,7 +11,7 @@ async function exibirCursos() {
 
         const imagem = clone.querySelector(".card-curso__imagem");
         imagem.src = `/images/cursos/${curso.imagem}`;
-        imagem.widht = 200;
+        imagem.width = 200;
         imagem.alt = curso.nome;
         
         clone.querySelector(".card-curso__titulo").textContent = curso.nome;
