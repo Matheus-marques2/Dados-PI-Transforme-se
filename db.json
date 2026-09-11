@@ -50,30 +50,58 @@
             "id_plano": 1
         }
     },
-    "saldos": {
+
+    "movimentacoes": {
         "1": {
-            "id_saldo": 1,
-            "saldo_total": 1000,
-            "entradas": [
-                [
-                    "Pix Antonio",
-                    100
-                ],
-                [
-                    "Pix Josefina",
-                    54
-                ]
-            ],
-            "saidas": [
-                [
-                    "Pagamento DAS",
-                    82
-                ]
-            ],
-            "despesas": 0,
-            "receita": 0
+            "id": 1,
+            "id_usuario": 1,
+            "descricao": "Lucas Leite",
+            "valor": 546,
+            "tipo": "entrada",
+            "data": "2026-08-05"
+        },
+        "2": {
+            "id": 2,
+            "id_usuario": 1,
+            "descricao": "João Vitor Jacaré",
+            "valor": 742,
+            "tipo": "entrada",
+            "data": "2026-08-10"
+        },
+        "3": {
+            "id": 3,
+            "id_usuario": 1,
+            "descricao": "Uber do brasil Ltda",
+            "valor": 120,
+            "tipo": "saida",
+            "data": "2026-08-15"
+        },
+        "4": {
+            "id": 4,
+            "id_usuario": 1,
+            "descricao": "Mercado Geral Ltda",
+            "valor": 172,
+            "tipo": "saida",
+            "data": "2026-08-20"
+        },
+        "5": {
+            "id": 5,
+            "id_usuario": 1,
+            "descricao": "Venda para cliente",
+            "valor": 4509,
+            "tipo": "entrada",
+            "data": "2026-09-02"
+        },
+        "6": {
+            "id": 6,
+            "id_usuario": 1,
+            "descricao": "Despesas do negócio",
+            "valor": 3841,
+            "tipo": "saida",
+            "data": "2026-09-04"
         }
     },
+
     "cursos": {
         "1": {
             "id_curso": 1,
@@ -117,6 +145,7 @@
             "imagem": "curso-2.jpeg"
         }
     },
+
     "mentorias": {
         "1": {
             "id_mentoria": 1,
@@ -166,7 +195,8 @@
             "modalidade": "Online",
             "imagem": "mentoria1.jpg"
             }
-  },   
+    },
+
     "professores": {
         "1": {
             "id_professor": 1,
@@ -194,6 +224,7 @@
             "cpf": "741.852.963-00"
         }
     },
+
     "tarefas": {
         "1": {
             "id": 1,
@@ -240,6 +271,7 @@
             "status": "concluida"
         }
     },
+
     "eventos": {
         "1": {
             "id": 1,
@@ -256,6 +288,7 @@
             "descricao": ""
         }
     },
+
     "planos": {
     "1": {
         "id_plano": 1,
