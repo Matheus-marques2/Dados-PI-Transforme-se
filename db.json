@@ -7,7 +7,8 @@
             "cnpj": "",
             "numero": "",
             "pronome": "",
-            "sobre": ""
+            "sobre": "",
+            "id_plano": 1
         },
         "carlos@gmail.com": {
             "id_usuario": 2,
@@ -16,7 +17,8 @@
             "cnpj": "",
             "numero": "",
             "pronome": "",
-            "sobre": ""
+            "sobre": "",
+            "id_plano": 1
         },
         "marcio@gmail.com": {
             "id_usuario": 3,
@@ -25,7 +27,8 @@
             "cnpj": "",
             "numero": "",
             "pronome": "",
-            "sobre": ""
+            "sobre": "",
+            "id_plano": 1
         },
         "ewerton@gmail.com": {
             "id_usuario": 4,
@@ -34,7 +37,8 @@
             "cnpj": "",
             "numero": "",
             "pronome": "",
-            "sobre": ""
+            "sobre": "",
+            "id_plano": 1
         },
         "matheus@gmail.com": {
             "id_usuario": 5,
@@ -42,7 +46,8 @@
             "senha": "123456",
             "numero": "",
             "pronome": "",
-            "sobre": ""
+            "sobre": "",
+            "id_plano": 1
         }
     },
     "saldos": {
@@ -250,5 +255,50 @@
             "titulo": "Pagar boleto",
             "descricao": ""
         }
+    },
+    "planos": {
+    "1": {
+        "id_plano": 1,
+        "nome": "Gratuito",
+        "preco": 0,
+        "features": {
+            "dashboard_completo": true,
+            "controle_financeiro": true,
+            "biblioteca_basica": true,
+            "conteudos_exclusivos": false,
+            "templates_avancados": false,
+            "lista_especialistas": false,
+            "suporte_prioritario": false
+        }
+    },
+    "2": {
+        "id_plano": 2,
+        "nome": "Premium",
+        "preco": 29.90,
+        "features": {
+            "dashboard_completo": true,
+            "controle_financeiro": true,
+            "biblioteca_basica": true,
+            "conteudos_exclusivos": true,
+            "templates_avancados": true,
+            "lista_especialistas": true,
+            "suporte_prioritario": false
+        }
+    },
+    "3": {
+        "id_plano": 3,
+        "nome": "Premium Deluxe",
+        "preco": 59.90,
+        "features": {
+            "dashboard_completo": true,
+            "controle_financeiro": true,
+            "biblioteca_basica": true,
+            "conteudos_exclusivos": true,
+            "templates_avancados": true,
+            "lista_especialistas": true,
+            "suporte_prioritario": true
+            }
+        }
     }
+
 }
