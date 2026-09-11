@@ -163,6 +163,71 @@ app.get("/api/mentorias", function(request, response){
     response.json(mentoriasComProfessor);
 });
 
+app.get("/api/financeiro/movimentacoes", function(request, response) {
+
+    if (!request.session.usuario) {
+        response.status(401).json({
+            erro: "Não autenticado"
+        });
+        return;
+    }
+
+    const idUsuario = request.session.usuario.id_usuario;
+
+    const { mes, ano, tipo } = request.query;
+
+    let movimentacoes = Object.values(db.movimentacoes || {});
+
+    // Somente movimentações do usuário logado
+    movimentacoes = movimentacoes.filter(function(movimentacao) {
+        return movimentacao.id_usuario === idUsuario;
+    });
+
+
+    // Filtra por tipo, caso seja informado
+    if (tipo) {
+
+        if (tipo !== "entrada" && tipo !== "saida") {
+            response.status(400).json({
+                erro: "Tipo inválido. Use 'entrada' ou 'saida'"
+            });
+            return;
+        }
+
+        movimentacoes = movimentacoes.filter(function(movimentacao) {
+            return movimentacao.tipo === tipo;
+        });
+    }
+
+
+    // Filtra mês e ano
+    if (mes && ano) {
+
+        movimentacoes = movimentacoes.filter(function(movimentacao) {
+
+            const [anoMovimento, mesMovimento] = movimentacao.data
+                .split("-")
+                .map(Number);
+
+            return (
+                anoMovimento === Number(ano) &&
+                mesMovimento === Number(mes)
+            );
+        });
+
+    }
+
+
+    // Mais recentes primeiro
+    movimentacoes.sort(function(a, b) {
+        return new Date(b.data) - new Date(a.data);
+    });
+
+
+    response.json(movimentacoes);
+});
+
+
 // ================== Rotas para POST =======================
 
 app.post("/cadastro", [
@@ -451,7 +516,7 @@ app.put("/api/perfil", function(request, response){
 
     response.json({sucesso: true});
 })
-// ================== Rotas de Calendário (eventos por dia) =======================
+// Rotas de Calendário (eventos por dia)
 
 // Lista os eventos do usuário logado. Aceita filtro opcional por mês/ano:
 // GET /api/eventos?mes=9&ano=2026
