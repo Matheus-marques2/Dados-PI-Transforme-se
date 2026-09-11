@@ -13,6 +13,12 @@ const { setDefaultCACertificates } = require("tls");
 // Exportando o banco de dados Json
 const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
 
+function salvarBanco() {
+    fs.writeFileSync(
+        path.join(__dirname, "db.json"),
+        JSON.stringify(db, null, 4)
+    );
+}
 
 // Da acesso a pasta public ao express para receber recursos de estilizacao e script como css e js
 app.use(express.static(
