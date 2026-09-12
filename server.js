@@ -45,7 +45,7 @@ app.use(session({
 
 
 // Coloca o arquivo index como rota principal do sistema
-app.get("/", function(request, response){
+app.get("/home", function(request, response){
     response.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
@@ -967,5 +967,5 @@ app.get("/assinaturas", function(request, response){
 // para acessar execute "node server.js" no terminal
 // use CTRL + Click no link gerado ou abra o localhost:3000 no seu navegador
 app.listen(3000, function(){
-    console.log("Servidor rodando no endereco: http://localhost:3000");
+    console.log("Servidor rodando no endereco: http://localhost:3000/login");
 });
