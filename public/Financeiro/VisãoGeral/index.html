@@ -1,18 +1,263 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saldos</title>
+    <title>Financeiro</title>
 </head>
+
 <body>
-    
-    <ul>
-        <li><a href="/financeiro">Financeiro</a></li>
-        <li><a href="/cursos">Cursos</a></li>
-        <li><a href="/tarefas">Tarefas</a></li>
-        <li><a href="/mentorias">Mentorias</a></li>
-        <li><a href="/perfil">Perfil</a></li>
-    </ul>
+
+    <header>
+        <h1>Financeiro</h1>
+
+        <nav>
+            <a href="/financeiro">Visão geral</a>
+            <a href="/financeiro?tipo=entrada">Receitas</a>
+            <a href="/financeiro?tipo=saida">Despesas</a>
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- ==================================================
+            RESUMO / GRÁFICO
+        =================================================== -->
+
+        <section>
+
+            <h2>Resumo financeiro</h2>
+
+            <div>
+                <p>Total movimentado</p>
+
+                <strong id="total-movimentado">
+                    R$ 0,00
+                </strong>
+            </div>
+
+
+            <div>
+                <p>
+                    Entradas:
+                    <span id="percentual-entradas">
+                        0%
+                    </span>
+                </p>
+
+                <p>
+                    Saídas:
+                    <span id="percentual-saidas">
+                        0%
+                    </span>
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+            CARDS DO RESUMO
+        =================================================== -->
+
+        <section>
+
+            <h2>Resumo</h2>
+
+            <div>
+
+                <article>
+                    <h3>Entrada</h3>
+
+                    <p id="valor-entradas">
+                        R$ 0,00
+                    </p>
+                </article>
+
+
+                <article>
+                    <h3>Saída</h3>
+
+                    <p id="valor-saidas">
+                        R$ 0,00
+                    </p>
+                </article>
+
+
+                <article>
+                    <h3>Lucro</h3>
+
+                    <p id="valor-lucro">
+                        R$ 0,00
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+            FILTRO POR MÊS
+        =================================================== -->
+
+        <section>
+
+            <label for="mes-financeiro">
+                Mês:
+            </label>
+
+            <select id="mes-financeiro">
+
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+
+            </select>
+
+
+            <label for="ano-financeiro">
+                Ano:
+            </label>
+
+            <input
+                type="number"
+                id="ano-financeiro"
+                min="2000"
+                max="2100"
+            >
+
+        </section>
+
+
+        <!-- ==================================================
+            CADASTRO DE MOVIMENTAÇÃO
+        =================================================== -->
+
+        <section>
+
+            <h2>Nova movimentação</h2>
+
+            <form id="form-movimentacao">
+
+                <div>
+                    <label for="descricao">
+                        Descrição
+                    </label>
+
+                    <input
+                        type="text"
+                        id="descricao"
+                        required
+                    >
+                </div>
+
+
+                <div>
+                    <label for="valor">
+                        Valor
+                    </label>
+
+                    <input
+                        type="number"
+                        id="valor"
+                        min="0.01"
+                        step="0.01"
+                        required
+                    >
+                </div>
+
+
+                <div>
+                    <label for="tipo">
+                        Tipo
+                    </label>
+
+                    <select id="tipo" required>
+
+                        <option value="entrada">
+                            Entrada
+                        </option>
+
+                        <option value="saida">
+                            Saída
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div>
+                    <label for="data">
+                        Data
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data"
+                        required
+                    >
+                </div>
+
+
+                <button type="submit">
+                    Adicionar
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- ==================================================
+            LISTA DE MOVIMENTAÇÕES
+        =================================================== -->
+
+        <section>
+
+            <h2>Detalhes</h2>
+
+            <div id="lista-movimentacoes">
+
+                <!--
+                    O JavaScript vai criar os elementos aqui.
+
+                    Exemplo esperado:
+
+                    <article>
+                        <span>Lucas Leite</span>
+                        <span>+ R$ 546,00</span>
+                        <button>Excluir</button>
+                    </article>
+                -->
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+            MENSAGEM DE ERRO
+        =================================================== -->
+
+        <p id="mensagem-financeiro"></p>
+
+    </main>
+
+
+    <script src="/scripts/financeiro.js"></script>
+
 </body>
+
 </html>

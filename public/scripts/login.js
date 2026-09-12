@@ -23,6 +23,6 @@ document.querySelector("form").addEventListener("submit", async(event) =>{
     //Caso o login seja efeituado com sucesso envia o user logado para página principal
     //está enviando para cursos apenas para realização de testes, já que a página principal ainda não foi feita.
     if(text.includes("sucesso!")){
-        window.location.href = "/cursos";
+        window.location.href = "/home";
     }
 })
