@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Ajuda</title>
+</head>
+<body>
+    <h2>Central de ajuda</h2>
+    <p>Como podemos ajudar você hoje?</p>
+
+    <input type="text" id="inputBusca" placeholder="Qual é a sua dúvida?" />
+
+    <h3>Categorias</h3>
+    <div id="listaCategorias"></div>
+
+    <h3>Perguntas frequentes</h3>
+    <ul id="listaPerguntas"></ul>
+    <p id="semResultado">Nenhuma pergunta encontrada.</p>
+
+    <div id="secaoTicket">
+        <h3>Falar com um especialista</h3>
+        <p id="mensagemLogin">
+            Você precisa estar logado pra abrir um ticket de suporte.
+            <a href="/login">Fazer login</a>
+        </p>
+
+        <input type="text" id="inputAssunto" placeholder="Assunto" />
+        <textarea id="inputMensagem" placeholder="Descreva sua dúvida..."></textarea>
+        <button class="btnPrincipal" id="btnAbrirTicket">Abrir ticket</button>
+        <p id="mensagemTicketEnviado">Ticket aberto! Nossa equipe vai te responder em breve.</p>
+
+        <ul id="listaMeusTickets"></ul>
+    </div>
+
+    <script src="../scripts/suporte.js"></script>
+</body>
+</html>
