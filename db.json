@@ -50,7 +50,6 @@
             "id_plano": 1
         }
     },
-
     "movimentacoes": {
         "1": {
             "id": 1,
@@ -101,7 +100,6 @@
             "data": "2026-09-04"
         }
     },
-
     "cursos": {
         "1": {
             "id_curso": 1,
@@ -145,7 +143,6 @@
             "imagem": "curso-2.jpeg"
         }
     },
-
     "mentorias": {
         "1": {
             "id_mentoria": 1,
@@ -154,7 +151,7 @@
             "avaliacao": 4.8,
             "modalidade": "Online",
             "imagem": "mentoria1.jpg"
-            },
+        },
         "2": {
             "id_mentoria": 2,
             "titulo": "Marketing que vende",
@@ -162,7 +159,7 @@
             "avaliacao": 4.8,
             "modalidade": "Online",
             "imagem": "mentoria2.jpg"
-            },
+        },
         "3": {
             "id_mentoria": 3,
             "titulo": "Organização e produtividade",
@@ -170,7 +167,7 @@
             "avaliacao": 4.8,
             "modalidade": "Online",
             "imagem": "mentoria3.jpg"
-            },
+        },
         "4": {
             "id_mentoria": 4,
             "titulo": "Venda em rede sociais",
@@ -178,7 +175,7 @@
             "avaliacao": 4.8,
             "modalidade": "Online",
             "imagem": "mentoria4.jpg"
-            },
+        },
         "5": {
             "id_mentoria": 5,
             "titulo": "Gerencie seu negócio",
@@ -186,7 +183,7 @@
             "avaliacao": 4.8,
             "modalidade": "Online",
             "imagem": "mentoria5.jpg"
-            },
+        },
         "6": {
             "id_mentoria": 6,
             "titulo": "Bolsa de valores",
@@ -194,9 +191,8 @@
             "avaliacao": 4.8,
             "modalidade": "Online",
             "imagem": "mentoria1.jpg"
-            }
+        }
     },
-
     "professores": {
         "1": {
             "id_professor": 1,
@@ -224,7 +220,6 @@
             "cpf": "741.852.963-00"
         }
     },
-
     "tarefas": {
         "1": {
             "id": 1,
@@ -271,7 +266,6 @@
             "status": "concluida"
         }
     },
-
     "eventos": {
         "1": {
             "id": 1,
@@ -288,50 +282,73 @@
             "descricao": ""
         }
     },
-
     "planos": {
-    "1": {
-        "id_plano": 1,
-        "nome": "Gratuito",
-        "preco": 0,
-        "features": {
-            "dashboard_completo": true,
-            "controle_financeiro": true,
-            "biblioteca_basica": true,
-            "conteudos_exclusivos": false,
-            "templates_avancados": false,
-            "lista_especialistas": false,
-            "suporte_prioritario": false
-        }
-    },
-    "2": {
-        "id_plano": 2,
-        "nome": "Premium",
-        "preco": 29.90,
-        "features": {
-            "dashboard_completo": true,
-            "controle_financeiro": true,
-            "biblioteca_basica": true,
-            "conteudos_exclusivos": true,
-            "templates_avancados": true,
-            "lista_especialistas": true,
-            "suporte_prioritario": false
-        }
-    },
-    "3": {
-        "id_plano": 3,
-        "nome": "Premium Deluxe",
-        "preco": 59.90,
-        "features": {
-            "dashboard_completo": true,
-            "controle_financeiro": true,
-            "biblioteca_basica": true,
-            "conteudos_exclusivos": true,
-            "templates_avancados": true,
-            "lista_especialistas": true,
-            "suporte_prioritario": true
+        "1": {
+            "id_plano": 1,
+            "nome": "Gratuito",
+            "preco": 0,
+            "features": {
+                "dashboard_completo": true,
+                "controle_financeiro": true,
+                "biblioteca_basica": true,
+                "conteudos_exclusivos": false,
+                "templates_avancados": false,
+                "lista_especialistas": false,
+                "suporte_prioritario": false
+            }
+        },
+        "2": {
+            "id_plano": 2,
+            "nome": "Premium",
+            "preco": 29.9,
+            "features": {
+                "dashboard_completo": true,
+                "controle_financeiro": true,
+                "biblioteca_basica": true,
+                "conteudos_exclusivos": true,
+                "templates_avancados": true,
+                "lista_especialistas": true,
+                "suporte_prioritario": false
+            }
+        },
+        "3": {
+            "id_plano": 3,
+            "nome": "Premium Deluxe",
+            "preco": 59.9,
+            "features": {
+                "dashboard_completo": true,
+                "controle_financeiro": true,
+                "biblioteca_basica": true,
+                "conteudos_exclusivos": true,
+                "templates_avancados": true,
+                "lista_especialistas": true,
+                "suporte_prioritario": true
             }
         }
+    },
+    "negocios": {
+        "5": {
+            "cnpj": "00.000.000/0001-00",
+            "nome_negocio": "MercaFácil",
+            "situacao": "Mei Ativo"
+        }
+    },
+    "obrigacoes": {
+        "1": {
+            "id_obrigacao": 1,
+            "titulo": "DAS mensal",
+            "descricao": "Pagamento mensal do MEI",
+            "vencimento": "20/09/2026",
+            "status": "Pendente",
+            "link": "https://www.gov.br/mei"
+        },
+        "2": {
+            "id_obrigacao": 2,
+            "titulo": "Declaração Anual (DASN-SIMEI)",
+            "descricao": "Declaração anual de faturamento do MEI",
+            "vencimento": "31/05/2027",
+            "status": "Pendente",
+            "link": "https://www.gov.br/mei"
+        }
     }
-
 }

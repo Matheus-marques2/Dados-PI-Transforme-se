@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obrigações</title>
+</head>
+<body>
+    <nav class="menu-meu-mei">
+    <a href="/visaoGeral" class="menu-meu-mei__item">Meu Mei</a>
+    <a href="/obrigacoes" class="menu-meu-mei__item">Obrigações</a>
+    <a href="/guias" class="menu-meu-mei__item menu-meu-mei__item--ativo">Guias</a>
+    </nav>
+    <h1>Obrigações</h1>
+
+    <nav class="abas-obrigacoes">
+        <button class="aba" data-filtro="Todas">Todas</button>
+        <button class="aba" data-filtro="Pendente">Pendentes</button>
+        <button class="aba" data-filtro="Concluida">Concluídas</button>
+    </nav>
+
+    <template id="template-obrigacao">
+        <div class="card-obrigacao">
+            <h3 class="card-obrigacao__titulo"></h3>
+            <span class="card-obrigacao__status"></span>
+            <p class="card-obrigacao__vencimento"></p>
+            <p class="card-obrigacao__descricao"></p>
+            <button class="card-obrigacao__concluir">Marcar como concluída</button>
+        </div>
+    </template>
+
+    <div id="lista-obrigacoes"></div>
+
+    <script type="module" src="/scripts/obrigacoes.js"></script>
+</body>
+</html>
