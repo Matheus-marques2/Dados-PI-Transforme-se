@@ -102,7 +102,7 @@ app.get("/assinaturas", function(request, response){
 });
 
 app.get("/suporte", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "suporte", "suporte.html"));
+    response.sendFile(path.join(__dirname, "public", "paginaSuporte", "suporte.html"));
 });
 
 //Rota de api para o front consumir e conseguir ver se o user está logado
@@ -1007,11 +1007,70 @@ app.delete("/eventos/:id", function(request, response){
     response.json({ sucesso: true });
 });
 
+// Rotas da Central de Ajuda
 
+const { listarCategorias, listarPerguntas, buscarPerguntas, criarTicket, listarTicketsDoUsuario } = require("./public/scripts/ajuda");
+ 
+app.get("/api/ajuda/categorias", function(request, response){
+    response.json(listarCategorias(db));
+});
+ 
+app.get("/api/ajuda/perguntas", function(request, response){
+    const { categoria } = request.query;
+    response.json(listarPerguntas(db, categoria));
+});
+ 
+app.get("/api/ajuda/busca", function(request, response){
+    const { q } = request.query;
+ 
+    if(!q){
+        response.status(400).json({ erro: "Informe o termo de busca no parâmetro q" });
+        return;
+    }
+ 
+    response.json(buscarPerguntas(db, q));
+});
+ 
+app.post("/api/ajuda/tickets", function(request, response){
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+ 
+    const { assunto, mensagem } = request.body;
+ 
+    if(!assunto || !assunto.trim()){
+        response.status(400).json({ erro: "O assunto do ticket é obrigatório" });
+        return;
+    }
+ 
+    if(!mensagem || !mensagem.trim()){
+        response.status(400).json({ erro: "A mensagem do ticket é obrigatória" });
+        return;
+    }
+ 
+    const novoTicket = criarTicket(db, request.session.usuario.id_usuario, assunto, mensagem);
+ 
+    fs.writeFileSync(path.join(__dirname, "db.json"), JSON.stringify(db, null, 4));
+ 
+    response.json({ sucesso: true, ticket: novoTicket });
+});
+ 
+app.get("/api/ajuda/tickets", function(request, response){
+    if(!request.session.usuario){
+        response.status(401).json({ erro: "Não autenticado" });
+        return;
+    }
+ 
+    response.json(listarTicketsDoUsuario(db, request.session.usuario.id_usuario));
+});
 
 // Rotas de Planos/Assinaturas
 
 // Lista todos os planos disponíveis (pública, pra tela de Assinaturas)
+
+const { pegarPlanoDoUsuario, usuarioTemAcesso, exigirFeature } = require("./public/scripts/planos");
+
 app.get("/api/planos", function(request, response){
     response.json(db.planos);
 });
