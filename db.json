@@ -350,5 +350,64 @@
             "status": "Pendente",
             "link": "https://www.gov.br/mei"
         }
-    }
+    },
+    "categoriasAjuda": {
+        "1": {
+            "id_categoria": 1,
+            "nome": "Minha conta"
+        },
+        "2": {
+            "id_categoria": 2,
+            "nome": "Financeiro"
+        },
+        "3": {
+            "id_categoria": 3,
+            "nome": "Meu MEI"
+        },
+        "4": {
+            "id_categoria": 4,
+            "nome": "Problemas"
+        },
+        "5": {
+            "id_categoria": 5,
+            "nome": "Assinaturas"
+        },
+        "6": {
+            "id_categoria": 6,
+            "nome": "Configurações"
+        }
+    },
+    "perguntasFrequentes": {
+        "1": {
+            "id_pergunta": 1,
+            "id_categoria": 4,
+            "pergunta": "Como emitir o DAS?",
+            "resposta": "Acesse Meu MEI > Obrigações e clique em Emitir DAS. O boleto é gerado com a guia do mês vigente."
+        },
+        "2": {
+            "id_pergunta": 2,
+            "id_categoria": 2,
+            "pergunta": "Como funciona o controle financeiro?",
+            "resposta": "Na aba Financeiro você registra entradas e saídas, e o sistema calcula o saldo automaticamente."
+        },
+        "3": {
+            "id_pergunta": 3,
+            "id_categoria": 1,
+            "pergunta": "Como alterar minha senha?",
+            "resposta": "Vá em Menu > Informações pessoais e edite o campo de senha."
+        },
+        "4": {
+            "id_pergunta": 4,
+            "id_categoria": 3,
+            "pergunta": "Como funciona o Meu MEI?",
+            "resposta": "É a área com guias, obrigações e conteúdos específicos para o seu MEI."
+        },
+        "5": {
+            "id_pergunta": 5,
+            "id_categoria": 4,
+            "pergunta": "Como falar com um especialista?",
+            "resposta": "Abra um ticket pela Central de Ajuda e um especialista responde pelo e-mail cadastrado."
+        }
+    },
+    "tickets": {}
 }
