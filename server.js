@@ -97,6 +97,14 @@ app.get("/api/cursos", function(request, response){
     response.json(db.cursos);
 });
 
+app.get("/assinaturas", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "pages", "assinaturas.html"));
+});
+
+app.get("/suporte", function(request, response){
+    response.sendFile(path.join(__dirname, "public", "pages", "suporte.html"));
+});
+
 //Rota de api para o front consumir e conseguir ver se o user está logado
 app.get("/api/usuario-logado", function(request, response){
     if(!request.session.usuario){
@@ -1045,10 +1053,6 @@ app.post("/api/planos/assinar", function(request, response){
         sucesso: true,
         plano: db.planos[id_plano]
     });
-});
-
-app.get("/assinaturas", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "assinaturas.html"));
 });
 // Sobe o servidor na porta 3000
 // para acessar execute "node server.js" no terminal
