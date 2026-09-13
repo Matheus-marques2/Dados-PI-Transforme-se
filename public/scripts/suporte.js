@@ -12,6 +12,11 @@ const btnAbrirTicket = document.getElementById("btnAbrirTicket");
 const mensagemTicketEnviado = document.getElementById("mensagemTicketEnviado");
 const listaMeusTickets = document.getElementById("listaMeusTickets");
 
+// escondo elas assim que a página carrega, e cada função decide quando mostrar
+semResultado.style.display = "none";
+mensagemLogin.style.display = "none";
+mensagemTicketEnviado.style.display = "none";
+
 // Um ícone simples por categoria, só pra deixar a tela parecida com o mockup
 const iconesPorCategoria = {
     "Minha conta": "👤",
@@ -22,9 +27,7 @@ const iconesPorCategoria = {
     "Configurações": "⚙️"
 };
 
-let categoriaSelecionada = null;
-
-// -------- Categorias --------
+// -------- Categorias (só exibição, sem clique/filtro) --------
 
 function carregarCategorias() {
     fetch("/api/ajuda/categorias")
@@ -43,34 +46,19 @@ function desenharCategorias(categorias) {
     categorias.forEach(function(categoria) {
         const card = document.createElement("div");
         card.className = "cardCategoria";
-        if (categoriaSelecionada === categoria.id_categoria) {
-            card.classList.add("ativa");
-        }
 
         const icone = iconesPorCategoria[categoria.nome] || "❓";
 
         card.innerHTML = "<span class='icone'>" + icone + "</span>" + categoria.nome;
 
-        card.addEventListener("click", function() {
-            // Clicar de novo na mesma categoria limpa o filtro
-            categoriaSelecionada = (categoriaSelecionada === categoria.id_categoria) ? null : categoria.id_categoria;
-            inputBusca.value = "";
-            desenharCategorias(categorias);
-            carregarPerguntas();
-        });
-
         listaCategorias.appendChild(card);
     });
 }
 
-// -------- Perguntas frequentes --------
+// -------- Perguntas frequentes (sempre abertas, sem precisar clicar) --------
 
 function carregarPerguntas() {
-    const url = categoriaSelecionada
-        ? "/api/ajuda/perguntas?categoria=" + categoriaSelecionada
-        : "/api/ajuda/perguntas";
-
-    fetch(url)
+    fetch("/api/ajuda/perguntas")
         .then(function(resposta) { return resposta.json(); })
         .then(function(perguntas) {
             desenharPerguntas(perguntas);
@@ -89,12 +77,8 @@ function desenharPerguntas(perguntas) {
         item.className = "itemPergunta";
 
         item.innerHTML =
-            "<div class='perguntaTitulo'>" + pergunta.pergunta + " <span>›</span></div>" +
+            "<div class='perguntaTitulo'>" + pergunta.pergunta + "</div>" +
             "<div class='perguntaResposta'>" + pergunta.resposta + "</div>";
-
-        item.querySelector(".perguntaTitulo").addEventListener("click", function() {
-            item.classList.toggle("aberta");
-        });
 
         listaPerguntas.appendChild(item);
     });
@@ -115,9 +99,6 @@ inputBusca.addEventListener("input", function() {
             carregarPerguntas();
             return;
         }
-
-        categoriaSelecionada = null;
-        carregarCategorias();
 
         fetch("/api/ajuda/busca?q=" + encodeURIComponent(termo))
             .then(function(resposta) { return resposta.json(); })
