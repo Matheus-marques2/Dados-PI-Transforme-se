@@ -98,11 +98,11 @@ app.get("/api/cursos", function(request, response){
 });
 
 app.get("/assinaturas", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "assinaturas.html"));
+    response.sendFile(path.join(__dirname, "public", "Assinaturas", "assinaturas.html"));
 });
 
 app.get("/suporte", function(request, response){
-    response.sendFile(path.join(__dirname, "public", "pages", "suporte.html"));
+    response.sendFile(path.join(__dirname, "public", "suporte", "suporte.html"));
 });
 
 //Rota de api para o front consumir e conseguir ver se o user está logado
