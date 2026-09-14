@@ -1023,7 +1023,7 @@ app.get("/api/ajuda/perguntas", function(request, response){
 app.get("/api/ajuda/busca", function(request, response){
     const { q } = request.query;
  
-    if(!q){
+    if(!q , typeof q !== "string" , !q.trim()){
         response.status(400).json({ erro: "Informe o termo de busca no parâmetro q" });
         return;
     }
