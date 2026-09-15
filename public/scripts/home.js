@@ -102,15 +102,22 @@ async function carregarResumoFinanceiro() {
             );
 
 
+        // Garante que a ausência da comparação
+        // não quebre a página
+        const comparacao =
+            dados.comparacao_mes_anterior || {
+                entrada: 0,
+                saida: 0
+            };
+
+
         document
             .getElementById(
                 "home-variacao-receita"
             )
             .textContent =
             formatarVariacao(
-                dados
-                    .comparacao_mes_anterior
-                    .entrada
+                comparacao.entrada
             );
 
 
@@ -120,9 +127,7 @@ async function carregarResumoFinanceiro() {
             )
             .textContent =
             formatarVariacao(
-                dados
-                    .comparacao_mes_anterior
-                    .saida
+                comparacao.saida
             );
 
 

@@ -204,10 +204,13 @@ app.get("/api/guias", function(request, response){
 // GET /api/financeiro/resumo?mes=8&ano=2026
 app.get("/api/financeiro/resumo", function(request, response) {
 
+    // Verifica autenticação
     if (!request.session.usuario) {
+
         response.status(401).json({
             erro: "Não autenticado"
         });
+
         return;
     }
 
@@ -224,81 +227,321 @@ app.get("/api/financeiro/resumo", function(request, response) {
         : hoje.getFullYear();
 
 
-    if (mes < 1 || mes > 12 || !Number.isInteger(mes)) {
+    // Validação do mês
+    if (
+        mes < 1 ||
+        mes > 12 ||
+        !Number.isInteger(mes)
+    ) {
+
         response.status(400).json({
             erro: "Mês inválido"
         });
+
         return;
     }
 
+
+    // Validação do ano
     if (!Number.isInteger(ano)) {
+
         response.status(400).json({
             erro: "Ano inválido"
         });
+
         return;
     }
 
 
-    const movimentacoes = Object.values(db.movimentacoes || {});
+    // =====================================================
+    // FUNÇÕES AUXILIARES
+    // =====================================================
 
-    // Movimentações apenas do usuário logado
-    const movimentacoesUsuario = movimentacoes.filter(function(movimentacao) {
-        return movimentacao.id_usuario === idUsuario;
-    });
+    function calcularTotalPorMes(
+        movimentacoes,
+        idUsuario,
+        mes,
+        ano,
+        tipo
+    ) {
+
+        return movimentacoes
+
+            .filter(function(movimentacao) {
+
+                if (
+                    movimentacao.id_usuario !==
+                    idUsuario
+                ) {
+                    return false;
+                }
+
+                if (
+                    movimentacao.tipo !== tipo
+                ) {
+                    return false;
+                }
+
+                const [
+                    anoMovimento,
+                    mesMovimento
+                ] =
+                    movimentacao.data
+                        .split("-")
+                        .map(Number);
+
+                return (
+                    anoMovimento === ano &&
+                    mesMovimento === mes
+                );
+
+            })
+
+            .reduce(function(
+                total,
+                movimentacao
+            ) {
+
+                return (
+                    total +
+                    Number(movimentacao.valor)
+                );
+
+            }, 0);
+    }
 
 
-    // Filtra mês solicitado
-    const movimentacoesMes = movimentacoesUsuario.filter(function(movimentacao) {
+    function calcularVariacao(
+        valorAtual,
+        valorAnterior
+    ) {
 
-        const [anoMovimento, mesMovimento] = movimentacao.data
-            .split("-")
-            .map(Number);
+        if (valorAnterior === 0) {
 
-        return anoMovimento === ano && mesMovimento === mes;
-    });
+            if (valorAtual === 0) {
+                return 0;
+            }
 
+            return 100;
+        }
+
+        return (
+            (valorAtual - valorAnterior) /
+            valorAnterior
+        ) * 100;
+    }
+
+
+    // =====================================================
+    // MOVIMENTAÇÕES
+    // =====================================================
+
+    const movimentacoes =
+        Object.values(
+            db.movimentacoes || {}
+        );
+
+
+    // =====================================================
+    // MÊS ANTERIOR
+    // =====================================================
+
+    let mesAnterior = mes - 1;
+    let anoAnterior = ano;
+
+    if (mesAnterior === 0) {
+
+        mesAnterior = 12;
+        anoAnterior--;
+    }
+
+
+    const entradaMesAnterior =
+        calcularTotalPorMes(
+            movimentacoes,
+            idUsuario,
+            mesAnterior,
+            anoAnterior,
+            "entrada"
+        );
+
+
+    const saidaMesAnterior =
+        calcularTotalPorMes(
+            movimentacoes,
+            idUsuario,
+            mesAnterior,
+            anoAnterior,
+            "saida"
+        );
+
+
+    // =====================================================
+    // MOVIMENTAÇÕES DO USUÁRIO
+    // =====================================================
+
+    const movimentacoesUsuario =
+        movimentacoes.filter(
+            function(movimentacao) {
+
+                return (
+                    movimentacao.id_usuario ===
+                    idUsuario
+                );
+
+            }
+        );
+
+
+    // =====================================================
+    // MOVIMENTAÇÕES DO MÊS ATUAL
+    // =====================================================
+
+    const movimentacoesMes =
+        movimentacoesUsuario.filter(
+            function(movimentacao) {
+
+                const [
+                    anoMovimento,
+                    mesMovimento
+                ] =
+                    movimentacao.data
+                        .split("-")
+                        .map(Number);
+
+                return (
+                    anoMovimento === ano &&
+                    mesMovimento === mes
+                );
+
+            }
+        );
+
+
+    // =====================================================
+    // CALCULA ENTRADAS E SAÍDAS
+    // =====================================================
 
     let entradas = 0;
     let saidas = 0;
 
-    movimentacoesMes.forEach(function(movimentacao) {
 
-        if (movimentacao.tipo === "entrada") {
-            entradas += Number(movimentacao.valor);
+    movimentacoesMes.forEach(
+        function(movimentacao) {
+
+            if (
+                movimentacao.tipo ===
+                "entrada"
+            ) {
+
+                entradas +=
+                    Number(
+                        movimentacao.valor
+                    );
+            }
+
+
+            if (
+                movimentacao.tipo ===
+                "saida"
+            ) {
+
+                saidas +=
+                    Number(
+                        movimentacao.valor
+                    );
+            }
+
         }
-
-        if (movimentacao.tipo === "saida") {
-            saidas += Number(movimentacao.valor);
-        }
-
-    });
+    );
 
 
-    const lucro = entradas - saidas;
+    // =====================================================
+    // COMPARAÇÃO COM MÊS ANTERIOR
+    // =====================================================
 
-    const totalMovimentado = entradas + saidas;
+    const variacaoEntrada =
+        calcularVariacao(
+            entradas,
+            entradaMesAnterior
+        );
+
+
+    const variacaoSaida =
+        calcularVariacao(
+            saidas,
+            saidaMesAnterior
+        );
+
+
+    // =====================================================
+    // OUTROS INDICADORES
+    // =====================================================
+
+    const lucro =
+        entradas - saidas;
+
+
+    const totalMovimentado =
+        entradas + saidas;
+
 
     let percentualEntradas = 0;
     let percentualSaidas = 0;
 
+
     if (totalMovimentado > 0) {
-        percentualEntradas = (entradas / totalMovimentado) * 100;
-        percentualSaidas = (saidas / totalMovimentado) * 100;
+
+        percentualEntradas =
+            (entradas / totalMovimentado) * 100;
+
+        percentualSaidas =
+            (saidas / totalMovimentado) * 100;
     }
 
 
+    // =====================================================
+    // RESPOSTA
+    // =====================================================
+
     response.json({
+
         mes: mes,
+
         ano: ano,
 
         entrada: entradas,
+
         saida: saidas,
+
         lucro: lucro,
 
-        total_movimentado: totalMovimentado,
+        total_movimentado:
+            totalMovimentado,
 
-        percentual_entradas: Number(percentualEntradas.toFixed(2)),
-        percentual_saidas: Number(percentualSaidas.toFixed(2))
+        percentual_entradas:
+            Number(
+                percentualEntradas.toFixed(2)
+            ),
+
+        percentual_saidas:
+            Number(
+                percentualSaidas.toFixed(2)
+            ),
+
+        comparacao_mes_anterior: {
+
+            entrada:
+                Number(
+                    variacaoEntrada.toFixed(2)
+                ),
+
+            saida:
+                Number(
+                    variacaoSaida.toFixed(2)
+                )
+        }
+
     });
 
 });
@@ -413,18 +656,24 @@ app.post("/api/financeiro/movimentacoes", function(request, response) {
         return;
     }
 
-
     const { descricao, valor, tipo, data } = request.body;
 
 
-    if (!descricao || !descricao.trim()) {
+    if (typeof descricao !== "string" || !descricao.trim() || !/[A-Za-zÀ-ÿ]/.test(descricao)) {
         response.status(400).json({
-            erro: "A descrição é obrigatória"
+            erro: "A descrição é obrigatória e deve conter pelo menos uma letra"
         });
         return;
     }
 
+    if (typeof descricao !== "string" || !descricao.trim() || (descricao.match(/[A-Za-zÀ-ÿ]/g) || []).length < 3) {
+        response.status(400).json({
+            erro: "A descrição é obrigatória e deve conter pelo menos 3 letras."
+        });
+        return;
+    }
 
+    // VALIDAÇÃO DO VALOR
     const valorNumero = Number(valor);
 
     if (!valorNumero || valorNumero <= 0) {
@@ -456,6 +705,7 @@ app.post("/api/financeiro/movimentacoes", function(request, response) {
     }
 
 
+    // GERA NOVO ID
     const movimentacoes = Object.values(db.movimentacoes);
 
     let maiorId = 0;
@@ -466,10 +716,10 @@ app.post("/api/financeiro/movimentacoes", function(request, response) {
         }
     });
 
-
     const novoId = maiorId + 1;
 
 
+    // CRIA MOVIMENTAÇÃO
     const novaMovimentacao = {
         id: novoId,
         id_usuario: request.session.usuario.id_usuario,
@@ -482,9 +732,7 @@ app.post("/api/financeiro/movimentacoes", function(request, response) {
 
     db.movimentacoes[novoId] = novaMovimentacao;
 
-
     salvarBanco();
-
 
     response.status(201).json({
         sucesso: true,
