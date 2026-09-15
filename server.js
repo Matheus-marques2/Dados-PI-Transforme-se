@@ -939,25 +939,27 @@ app.put("/tarefas/:id", function(request, response){
 
     const { titulo, descricao, status } = request.body;
 
-    if(titulo !== undefined){
-        if(!titulo.trim()){
-            response.status(400).json({ erro: "O título da tarefa é obrigatório" });
-            return;
-        }
-        tarefa.titulo = titulo;
+    if(titulo !== undefined && !titulo.trim()){
+        response.status(400).json({ erro: "O título da tarefa é obrigatório" });
+        return;
     }
 
-    if(descricao !== undefined){
-        tarefa.descricao = descricao;
-    }
-
-    if(status !== undefined){
-        if(status !== "pendente" && status !== "concluida"){
+    if(status !== undefined && status !== "pendente" && status !== "concluida"){
             response.status(400).json({ erro: "Status inválido, use 'pendente' ou 'concluida'" });
             return;
         }
-        tarefa.status = status;
-    }
+
+        if(titulo !== undefined){
+            tarefa.titulo = titulo;
+        }
+
+        if(descricao !== undefined){
+            tarefa.descricao = descricao;
+        }
+
+        if(status !== undefined){
+            tarefa.status = status;
+        }
 
     fs.writeFileSync(
         path.join(__dirname, "db.json"),
