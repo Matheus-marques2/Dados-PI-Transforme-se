@@ -1130,7 +1130,7 @@ app.post("/eventos", function(request, response){
 
     const { data, titulo, descricao } = request.body;
 
-    if(!data || !/^\d{4}-\d{2}-\d{2}$/.test(data)){
+    if(!data || !dataEhValida(data)){
         response.status(400).json({ erro: "Informe uma data válida no formato AAAA-MM-DD" });
         return;
     }
@@ -1195,19 +1195,21 @@ app.put("/eventos/:id", function(request, response){
 
     const { data, titulo, descricao } = request.body;
 
-    if(data !== undefined){
-        if(!/^\d{4}-\d{2}-\d{2}$/.test(data)){
+    if(data !== undefined && !dataEhValida(data)){
             response.status(400).json({ erro: "Data inválida, use o formato AAAA-MM-DD" });
             return;
         }
+
+    if(titulo !== undefined && !titulo.trim()){
+            response.status(400).json({ erro: "O título do evento é obrigatório" });
+            return;
+        }
+    
+    if(data !== undefined){
         evento.data = data;
     }
 
     if(titulo !== undefined){
-        if(!titulo.trim()){
-            response.status(400).json({ erro: "O título do evento é obrigatório" });
-            return;
-        }
         evento.titulo = titulo;
     }
 
