@@ -1130,8 +1130,16 @@ app.post("/eventos", function(request, response){
 
     const { data, titulo, descricao } = request.body;
 
-    if(!data || !dataEhValida(data)){
-        response.status(400).json({ erro: "Informe uma data válida no formato AAAA-MM-DD" });
+    if(!data || !/^\d{4}-\d{2}-\d{2}$/.test(data)){
+        response.status(400).json({ erro: "Informe uma data real no formato AAAA-MM-DD" });
+        return;
+    }
+
+    const [anoEvento, mesEvento, diaEvento] = data.split("-").map(Number);
+    const dataConvertidaEvento = new Date(anoEvento, mesEvento - 1, diaEvento);
+
+    if(dataConvertidaEvento.getFullYear() !== anoEvento || dataConvertidaEvento.getMonth() !== mesEvento - 1 || dataConvertidaEvento.getDate() !== diaEvento){
+        response.status(400).json({ erro: "Informe uma data real no formato AAAA-MM-DD" });
         return;
     }
 
@@ -1195,9 +1203,19 @@ app.put("/eventos/:id", function(request, response){
 
     const { data, titulo, descricao } = request.body;
 
-    if(data !== undefined && !dataEhValida(data)){
-            response.status(400).json({ erro: "Data inválida, use o formato AAAA-MM-DD" });
+    if(data !== undefined){
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(data)){
+            response.status(400).json({ erro: "Data inválida, use uma data real no formato AAAA-MM-DD" });
             return;
+        }
+    }
+
+     const [anoEventoEdicao, mesEventoEdicao, diaEventoEdicao] = data.split("-").map(Number);
+     const dataConvertidaEdicao = new Date(anoEventoEdicao, mesEventoEdicao - 1, diaEventoEdicao);
+
+     if(dataConvertidaEdicao.getFullYear() !== anoEventoEdicao || dataConvertidaEdicao.getMonth() !== mesEventoEdicao - 1 || dataConvertidaEdicao.getDate() !== diaEventoEdicao){
+         response.status(400).json({ erro: "Data inválida, use uma data real no formato AAAA-MM-DD" });
+         return;
         }
 
     if(titulo !== undefined && !titulo.trim()){
