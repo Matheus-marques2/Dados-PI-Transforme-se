@@ -413,15 +413,9 @@ async function excluirMovimentacao(id) {
 
 
     } catch (erro) {
-
         console.error(erro);
-
-        mostrarMensagem(
-            "Erro ao excluir movimentação."
-        );
-
+        mostrarMensagem("Erro ao excluir movimentação.");
     }
-
 }
 
 
@@ -429,34 +423,20 @@ function formatarDinheiro(valor) {
 
     return Number(valor).toLocaleString(
         "pt-BR",
-        {
-            style: "currency",
-            currency: "BRL"
-        }
+        { style: "currency", currency: "BRL" }
     );
-
 }
 
 
 function formatarData(data) {
-
     const partes = data.split("-");
 
     return (
-        partes[2] +
-        "/" +
-        partes[1] +
-        "/" +
-        partes[0]
+        partes[2] + "/" + partes[1] + "/" + partes[0]
     );
-
 }
 
 
 function mostrarMensagem(mensagem) {
-
-    document
-        .getElementById("mensagem-financeiro")
-        .textContent = mensagem;
-
+    document.getElementById("mensagem-financeiro").textContent = mensagem;
 }
